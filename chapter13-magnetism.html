@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 13: Magnetism | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 13: Magnetism</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS2 Physics</a> › <strong>Chapter 13: Magnetism</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 13: Magnetism</h1>
+            <div class="chapter-meta">
+                <span>📗 SS2 Second Term</span>
+                <span>⏱️ Reading: 30 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Define magnets and magnetic materials</li>
+                <li>Describe magnetic poles and their properties</li>
+                <li>Explain magnetic fields and field lines</li>
+                <li>Distinguish between magnetic and non-magnetic materials</li>
+                <li>Explain methods of magnetization and demagnetization</li>
+                <li>Describe Earth's magnetism</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>13.1 What is Magnetism?</h2>
+            <div class="definition-box">
+                <strong>📌 Magnetism:</strong> A force of attraction or repulsion produced by magnets or moving electric charges.<br>
+                <strong>📌 Magnet:</strong> An object that produces a magnetic field and attracts magnetic materials like iron, nickel, and cobalt.
+            </div>
+            
+            <h3>Magnetic Materials</h3>
+            <table>
+                <tr><th>Magnetic (Ferromagnetic)</th><th>Non-Magnetic</th></tr>
+                <tr><td>Iron</td><td>Wood</td></tr>
+                <tr><td>Nickel</td><td>Plastic</td></tr>
+                <tr><td>Cobalt</td><td>Glass</td></tr>
+                <tr><td>Steel (alloy of iron)</td><td>Aluminum</td></tr>
+                <tr><td>Magnetite (lodestone)</td><td>Copper</td></tr>
+            </table>
+            
+            <h2>13.2 Magnetic Poles</h2>
+            <div class="definition-box">
+                <strong>📌 Magnetic Poles:</strong> Regions of a magnet where the magnetic force is strongest. Every magnet has a <strong>North (N)</strong> pole and a <strong>South (S)</strong> pole.
+            </div>
+            
+            <div class="key-point">
+                <strong>🧲 Law of Magnetic Poles:</strong><br>
+                • <strong>Like poles repel</strong> (N-N or S-S)<br>
+                • <strong>Unlike poles attract</strong> (N-S)<br>
+                • A single magnetic pole (monopole) does NOT exist
+            </div>
+            
+            <h2>13.3 Magnetic Field</h2>
+            <div class="definition-box">
+                <strong>📌 Magnetic Field:</strong> The region around a magnet where magnetic forces can be felt or detected. Represented by <strong>magnetic field lines</strong>.
+            </div>
+            
+            <p><strong>Properties of Magnetic Field Lines:</strong></p>
+            <ul>
+                <li>Go from <strong>North to South</strong> outside the magnet</li>
+                <li>Go from <strong>South to North</strong> inside the magnet</li>
+                <li>Form <strong>closed loops</strong></li>
+                <li>Never <strong>cross</strong> each other</li>
+                <li>Closer lines = <strong>stronger</strong> field</li>
+            </ul>
+            
+            <h2>13.4 Types of Magnets</h2>
+            <table>
+                <tr><th>Type</th><th>Description</th><th>Examples</th></tr>
+                <tr><td><strong>Permanent Magnets</strong></td><td>Retain magnetism for long time</td><td>Bar magnet, horseshoe magnet, compass needle</td></tr>
+                <tr><td><strong>Temporary Magnets</strong></td><td>Lose magnetism quickly</td><td>Electromagnet, soft iron core</td></tr>
+                <tr><td><strong>Electromagnets</strong></td><td>Magnetism from electric current</td><td>Electric bell, relay, MRI machine</td></tr>
+            </table>
+            
+            <h2>13.5 Magnetization and Demagnetization</h2>
+            
+            <h3>Methods of Magnetization</h3>
+            <ul>
+                <li><strong>Stroking:</strong> Rubbing a magnet along a magnetic material in one direction</li>
+                <li><strong>Electrical Method:</strong> Placing material in a solenoid with DC current</li>
+                <li><strong>Induction:</strong> Bringing a magnet near a magnetic material</li>
+            </ul>
+            
+            <h3>Methods of Demagnetization</h3>
+            <ul>
+                <li><strong>Heating:</strong> Heating the magnet strongly</li>
+                <li><strong>Hammering:</strong> Hammering the magnet repeatedly</li>
+                <li><strong>AC Current:</strong> Passing alternating current through a solenoid around the magnet</li>
+            </ul>
+            
+            <h2>13.6 Magnetic Properties of Materials</h2>
+            <table>
+                <tr><th>Property</th><th>Soft Iron</th><th>Steel</th></tr>
+                <tr><td>Magnetization</td><td>Easily magnetized</td><td>Hard to magnetize</td></tr>
+                <tr><td>Demagnetization</td><td>Easily demagnetized</td><td>Retains magnetism</td></tr>
+                <tr><td>Use</td><td>Electromagnet cores, transformers</td><td>Permanent magnets</td></tr>
+                <tr><td>Retentivity</td><td>Low</td><td>High</td></tr>
+                <tr><td>Coercivity</td><td>Low</td><td>High</td></tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>💡 Memory Tip:</strong> Soft iron = Soft (easy to magnetize AND demagnetize). Steel = Stubborn (hard to magnetize AND demagnetize).
+            </div>
+            
+            <h2>13.7 Earth's Magnetism</h2>
+            <div class="definition-box">
+                <strong>📌 Earth's Magnetic Field:</strong> The Earth behaves like a giant bar magnet with a magnetic field that protects us from solar winds.
+            </div>
+            <ul>
+                <li><strong>Geographic North</strong> ≈ Magnetic South (where compass N points)</li>
+                <li><strong>Angle of Declination:</strong> Angle between geographic north and magnetic north</li>
+                <li><strong>Angle of Dip:</strong> Angle between Earth's magnetic field and the horizontal</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>🧭 Compass:</strong> A small magnet free to rotate. Its North pole points toward Earth's magnetic South (near geographic North).
+            </div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 13 Summary</h3>
+                <ul>
+                    <li><strong>Magnets</strong> attract iron, nickel, cobalt (ferromagnetic materials)</li>
+                    <li><strong>Like poles repel; unlike poles attract</strong></li>
+                    <li><strong>Magnetic field lines:</strong> N → S outside, S → N inside</li>
+                    <li><strong>Electromagnet:</strong> Magnetism from electric current</li>
+                    <li><strong>Soft iron:</strong> Temporary magnets; <strong>Steel:</strong> Permanent magnets</li>
+                    <li><strong>Earth</strong> has a magnetic field (protects from solar wind)</li>
+                </ul>
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter12-waves.html">← Previous: Chapter 12 - Waves</a>
+            <a href="chapter14-basic-electricity.html" class="next-chapter">Next: Chapter 14 - Basic Electricity →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" id="upgradeBtn" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium access is NOT automatic. Access granted after verification.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #999;">Premium activates within 24 hours after payment confirmation.</p>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about magnetism!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What are magnetic poles?')">🧲 Poles</span>
+        <span class="chip" onclick="askThis('What is a magnetic field?')">🔍 Field</span>
+        <span class="chip" onclick="askThis('Methods of magnetization')">⚡ Magnetization</span>
+        <span class="chip" onclick="askThis('Difference between soft iron and steel')">🔩 Iron/Steel</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY_ACCOUNT = { bank: "Opay (Paycom)", accountNumber: "8052059012", accountName: "Alade Timothy Olarewaju", amount: 1500 };
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    currentUser.premium = isPremium; currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    function updateUI() {
+        if (isPremium) {
+            document.getElementById('premiumBadge').textContent = '👑 Premium Active';
+            document.getElementById('premiumBadge').style.background = '#00a86b';
+            const pc = document.getElementById('premiumCard');
+            if (pc) pc.innerHTML = `<h3>👑 Premium Active</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>`;
+        }
+    }
+    
+    function copyAccountNumber() { navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber); alert('✅ Copied'); }
+    function openPaymentModal() { if (isPremium) { alert('Already Premium!'); return; } document.getElementById('payerName').value = currentUser.name || ''; document.getElementById('payerEmail').value = currentUser.email || ''; document.getElementById('paymentModal').style.display = 'flex'; }
+    function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; document.getElementById('paymentStatus').style.display = 'none'; }
+    function submitPaymentRequest() {
+        const name = document.getElementById('payerName').value.trim();
+        const email = document.getElementById('payerEmail').value.trim();
+        const ref = document.getElementById('transactionRef').value.trim();
+        const amt = document.getElementById('paymentAmount').value.trim();
+        const sd = document.getElementById('paymentStatus');
+        if (!name || !email) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter name and email.'; return; }
+        if (!ref) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter reference.'; return; }
+        if (amt != OPAY_ACCOUNT.amount) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Amount must be ₦'+OPAY_ACCOUNT.amount+'.'; return; }
+        if (paymentRequests.find(r=>r.reference===ref)) { sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Already submitted.'; return; }
+        paymentRequests.push({ id:'PAY_'+Date.now(), userId:currentUser.id, userName:name, userEmail:email, reference:ref, amount:parseFloat(amt), status:'pending', submittedAt:new Date().toISOString() });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        sd.style.display='block'; sd.className='payment-status status-pending';
+        sd.innerHTML='⏳ Submitted! Ref: '+ref+'. Access after verification.';
+    }
+    
+    function addMessage(text, sender) {
+        const div = document.createElement('div'); div.className = `message ${sender}-msg`; div.innerHTML = text;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('aiBody').scrollTop = document.getElementById('aiBody').scrollHeight;
+    }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('magnetic pole')) return `🧲 Every magnet has North and South poles. Like poles repel, unlike poles attract.`;
+        if (q.includes('magnetic field')) return `🔍 Magnetic field is the region around a magnet where magnetic force is felt. Lines go N→S outside.`;
+        if (q.includes('magnetization')) return `⚡ Methods: Stroking (rubbing), Electrical (DC in solenoid), Induction (bringing magnet near).`;
+        if (q.includes('demagnetization')) return `💨 Demagnetization: Heating, Hammering, AC current through solenoid.`;
+        if (q.includes('soft iron') || q.includes('steel')) return `🔩 Soft iron: easily magnetized & demagnetized (electromagnets). Steel: hard to magnetize, retains magnetism (permanent magnets).`;
+        if (q.includes('earth') && q.includes('magnet')) return `🌍 Earth is a giant magnet. Geographic North ≈ Magnetic South. Protects us from solar winds.`;
+        if (q.includes('hello') || q.includes('hi')) return `👋 Hello! Ask me about magnetism!`;
+        return `🤔 Try: "Magnetic poles" or "Magnetic field" or "Soft iron vs steel"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput'); const q = input.value.trim(); if (!q) return;
+        addMessage(q, 'user'); input.value = '';
+        if (!isPremium) {
+            sessionQuestions++; currentUser.questions = sessionQuestions;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const ui = users.findIndex(u => u.id === currentUser.id);
+            if (ui !== -1) { users[ui].questions = sessionQuestions; localStorage.setItem('physics_users', JSON.stringify(users)); }
+            if (sessionQuestions >= MAX_FREE) setTimeout(() => addMessage('⚠️ Free limit reached! Upgrade (₦1,500) Opay: 8052059012', 'ai'), 300);
+        }
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display = 'none'; document.getElementById('floatingBtn').style.display = 'flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display = 'block'; document.getElementById('floatingBtn').style.display = 'none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    window.askAI = askAI; window.askThis = askThis; window.closeAI = closeAI; window.openAI = openAI;
+    window.openPaymentModal = openPaymentModal; window.closePaymentModal = closePaymentModal;
+    window.submitPaymentRequest = submitPaymentRequest; window.copyAccountNumber = copyAccountNumber; window.logout = logout;
+    updateUI();
+</script>
+</body>
+</html>

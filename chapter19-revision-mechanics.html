@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 19: Revision Mechanics | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 19: Revision Mechanics</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS3 Physics</a> › <strong>Chapter 19: Revision Mechanics</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 19: Revision Mechanics</h1>
+            <div class="chapter-meta">
+                <span>📙 SS3 Second Term</span>
+                <span>⏱️ Reading: 45 mins</span>
+            </div>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>19.1 Motion (SUVAT Equations)</h2>
+            <div class="formula">v = u + at &nbsp;|&nbsp; s = ut + ½at² &nbsp;|&nbsp; v² = u² + 2as</div>
+            <div class="example-box"><strong>📐 Example:</strong> Car starts from rest, accelerates at 2 m/s² for 10 s. Find distance.<br>s = 0 + ½(2)(100) = <strong>100 m</strong></div>
+            
+            <h2>19.2 Forces and Newton's Laws</h2>
+            <div class="formula">F = ma &nbsp;|&nbsp; W = mg &nbsp;|&nbsp; F = μN (friction)</div>
+            <div class="example-box"><strong>📐 Example:</strong> 5 kg object, 20 N force. Find acceleration.<br>a = 20/5 = <strong>4 m/s²</strong></div>
+            
+            <h2>19.3 Work, Energy, and Power</h2>
+            <div class="formula">W = Fd &nbsp;|&nbsp; KE = ½mv² &nbsp;|&nbsp; PE = mgh &nbsp;|&nbsp; P = W/t</div>
+            <div class="example-box"><strong>📐 Example:</strong> 2 kg ball at 10 m height. Find PE.<br>PE = 2 × 9.8 × 10 = <strong>196 J</strong></div>
+            
+            <h2>19.4 Momentum and Impulse</h2>
+            <div class="formula">p = mv &nbsp;|&nbsp; J = Ft = Δp &nbsp;|&nbsp; m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+            
+            <h2>19.5 Scalars and Vectors</h2>
+            <table>
+                <tr><th>Scalars</th><th>Vectors</th></tr>
+                <tr><td>Mass, Time, Distance, Speed, Energy</td><td>Displacement, Velocity, Acceleration, Force, Momentum</td></tr>
+            </table>
+            
+            <h2>19.6 Density and Pressure</h2>
+            <div class="formula">ρ = m/V &nbsp;|&nbsp; P = F/A &nbsp;|&nbsp; P = ρgh (liquids)</div>
+            
+            <h2>19.7 Simple Machines</h2>
+            <div class="formula">MA = Load/Effort &nbsp;|&nbsp; VR = Effort distance/Load distance &nbsp;|&nbsp; η = (MA/VR)×100%</div>
+            
+            <h2>19.8 WAEC/NECO Practice Questions</h2>
+            <div class="example-box">
+                <strong>Q1:</strong> A car accelerates uniformly from 10 m/s to 30 m/s in 5 seconds. Calculate: (a) acceleration, (b) distance covered.<br>
+                <strong>Answer:</strong> (a) a = (30-10)/5 = <strong>4 m/s²</strong> (b) s = (10×5) + ½(4)(25) = 50+50 = <strong>100 m</strong>
+            </div>
+            <div class="example-box">
+                <strong>Q2:</strong> A force of 100 N acts on a body of mass 25 kg. Find the acceleration produced.<br>
+                <strong>Answer:</strong> a = F/m = 100/25 = <strong>4 m/s²</strong>
+            </div>
+            <div class="example-box">
+                <strong>Q3:</strong> An object of mass 5 kg is raised through a height of 8 m. Calculate the work done. (g = 10 m/s²)<br>
+                <strong>Answer:</strong> W = mgh = 5 × 10 × 8 = <strong>400 J</strong>
+            </div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Ultimate Mechanics Formula Sheet</h3>
+                <ul>
+                    <li><strong>Motion:</strong> v=u+at, s=ut+½at², v²=u²+2as</li>
+                    <li><strong>Force:</strong> F=ma, W=mg, F=μN</li>
+                    <li><strong>Energy:</strong> KE=½mv², PE=mgh, W=Fd</li>
+                    <li><strong>Power:</strong> P=W/t=Fv</li>
+                    <li><strong>Momentum:</strong> p=mv, J=Ft=Δp</li>
+                    <li><strong>Pressure:</strong> P=F/A, P=ρgh</li>
+                    <li><strong>Machines:</strong> MA=L/E, VR=ED/LD, η=MA/VR×100%</li>
+                </ul>
+            </div>
+            
+            <div class="key-point"><strong>🎯 WAEC/NECO Tip:</strong> Mechanics questions make up about 40% of the exam! Master these formulas!</div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter18-atomic-nuclear.html">← Previous: Chapter 18 - Atomic & Nuclear</a>
+            <a href="chapter20-practical-physics.html" class="next-chapter">Next: Chapter 20 - Practical Physics →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;"><li>✓ All 20 Chapters</li><li>✓ Unlimited AI Tutor</li><li>✓ WAEC/NECO Prep</li></ul>
+            <button class="btn-premium" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account:</strong> 8052059012 <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium is NOT automatic.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about mechanics!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('SUVAT: u=0, a=2, t=10, find s')">🏃 SUVAT</span>
+        <span class="chip" onclick="askThis('Force: m=5kg, a=4m/s²')">💪 F=ma</span>
+        <span class="chip" onclick="askThis('KE: m=2kg, v=10m/s')">⚡ KE</span>
+        <span class="chip" onclick="askThis('MA: Load=500N, Effort=100N')">🔧 MA</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY = { bank:"Opay", account:"8052059012", name:"Alade Timothy Olarewaju", amount:1500 };
+    let payments = JSON.parse(localStorage.getItem('payment_requests'))||[];
+    let user = JSON.parse(sessionStorage.getItem('currentUser'));
+    if(!user) window.location.href='login.html';
+    let users = JSON.parse(localStorage.getItem('physics_users'))||[];
+    let uData = users.find(u=>u.id===user.id);
+    if(!uData){ sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    let premium = uData.premium||false, qUsed = uData.questions||0, MAX=10;
+    user.premium=premium; user.questions=qUsed;
+    sessionStorage.setItem('currentUser',JSON.stringify(user));
+    
+    function updateUI(){ if(premium){ document.getElementById('premiumBadge').textContent='👑 Premium'; document.getElementById('premiumBadge').style.background='#00a86b'; let pc=document.getElementById('premiumCard'); if(pc) pc.innerHTML='<h3>👑 Premium</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href=\'index.html\'">📚 Library</button>'; } }
+    function copyAccountNumber(){ navigator.clipboard.writeText(OPAY.account); alert('✅ Copied'); }
+    function openPaymentModal(){ if(premium){ alert('Already Premium!'); return; } document.getElementById('payerName').value=user.name||''; document.getElementById('payerEmail').value=user.email||''; document.getElementById('paymentModal').style.display='flex'; }
+    function closePaymentModal(){ document.getElementById('paymentModal').style.display='none'; document.getElementById('paymentStatus').style.display='none'; }
+    function submitPaymentRequest(){
+        let n=document.getElementById('payerName').value.trim(), e=document.getElementById('payerEmail').value.trim(), r=document.getElementById('transactionRef').value.trim(), a=document.getElementById('paymentAmount').value.trim(), sd=document.getElementById('paymentStatus');
+        if(!n||!e){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter name/email.'; return; }
+        if(!r){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter reference.'; return; }
+        if(a!=OPAY.amount){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Amount must be ₦'+OPAY.amount; return; }
+        if(payments.find(p=>p.reference===r)){ sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Already submitted.'; return; }
+        payments.push({ id:'PAY_'+Date.now(), userId:user.id, userName:n, userEmail:e, reference:r, amount:parseFloat(a), status:'pending', submittedAt:new Date().toISOString() });
+        localStorage.setItem('payment_requests',JSON.stringify(payments));
+        sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Submitted! Verified within 24h.';
+    }
+    
+    function addMsg(t,s){ let d=document.createElement('div'); d.className=`message ${s}-msg`; d.innerHTML=t; document.getElementById('chatMessages').appendChild(d); document.getElementById('aiBody').scrollTop=document.getElementById('aiBody').scrollHeight; }
+    
+    function getAI(q){
+        q=q.toLowerCase();
+        if(q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if(q.includes('suvat')||(q.includes('u=')&&q.includes('a='))){ let n=q.match(/\d+/g); if(n&&n.length>=3) return `🏃 s = ut + ½at² = 0 + ½×${n[1]}×${n[2]}² = ${0.5*parseFloat(n[1])*Math.pow(parseFloat(n[2]),2)} m`; }
+        if(q.includes('force')||q.includes('f=ma')){ let n=q.match(/\d+/g); if(n&&n.length>=2) return `💪 F = ma = ${n[0]} × ${n[1]} = ${parseFloat(n[0])*parseFloat(n[1])} N`; }
+        if(q.includes('ke')){ let n=q.match(/\d+/g); if(n&&n.length>=2) return `⚡ KE = ½mv² = 0.5 × ${n[0]} × ${n[1]}² = ${0.5*parseFloat(n[0])*Math.pow(parseFloat(n[1]),2)} J`; }
+        if(q.includes('ma')){ let n=q.match(/\d+/g); if(n&&n.length>=2) return `🔧 MA = Load/Effort = ${n[0]}/${n[1]} = ${parseFloat(n[0])/parseFloat(n[1])}`; }
+        if(q.includes('hello')||q.includes('hi')) return `👋 Hello! Ask me about mechanics!`;
+        return `🤔 Try: "SUVAT: u=0, a=2, t=10" or "Force: 5kg, 4m/s²" or "KE: 2kg, 10m/s"`;
+    }
+    
+    function askAI(){ let i=document.getElementById('aiInput'), q=i.value.trim(); if(!q) return; addMsg(q,'user'); i.value=''; if(!premium){ qUsed++; user.questions=qUsed; sessionStorage.setItem('currentUser',JSON.stringify(user)); let us=JSON.parse(localStorage.getItem('physics_users'))||[]; let ui=us.findIndex(u=>u.id===user.id); if(ui!==-1){us[ui].questions=qUsed; localStorage.setItem('physics_users',JSON.stringify(us));} if(qUsed>=MAX) setTimeout(()=>addMsg('⚠️ Free limit! Upgrade ₦1,500 Opay:8052059012','ai'),300); } setTimeout(()=>addMsg(getAI(q),'ai'),500); }
+    function askThis(q){ document.getElementById('aiInput').value=q; askAI(); }
+    function closeAI(){ document.getElementById('aiWidget').style.display='none'; document.getElementById('floatingBtn').style.display='flex'; }
+    function openAI(){ document.getElementById('aiWidget').style.display='block'; document.getElementById('floatingBtn').style.display='none'; }
+    function logout(){ sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    
+    window.askAI=askAI; window.askThis=askThis; window.closeAI=closeAI; window.openAI=openAI;
+    window.openPaymentModal=openPaymentModal; window.closePaymentModal=closePaymentModal;
+    window.submitPaymentRequest=submitPaymentRequest; window.copyAccountNumber=copyAccountNumber; window.logout=logout;
+    updateUI();
+</script>
+</body>
+</html>

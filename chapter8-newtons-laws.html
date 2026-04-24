@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Newton's Laws of Motion | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 8: Newton's Laws of Motion</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS2 Physics</a> › <strong>Chapter 8: Newton's Laws</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 8: Newton's Laws of Motion</h1>
+            <div class="chapter-meta">
+                <span>📗 SS2 First Term</span>
+                <span>⏱️ Reading: 40 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>State and explain Newton's three laws of motion</li>
+                <li>Define inertia and its relationship to mass</li>
+                <li>Apply Newton's second law (F = ma) to solve problems</li>
+                <li>Explain action-reaction pairs</li>
+                <li>Solve problems involving connected bodies and tension</li>
+                <li>Apply Newton's laws to real-life situations</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>8.1 Introduction to Newton's Laws</h2>
+            <p>Sir Isaac Newton (1642–1727) formulated three fundamental laws that govern the motion of objects. These laws form the foundation of classical mechanics.</p>
+            <div class="key-point"><strong>💡 Newton's laws describe how forces affect motion.</strong> They apply to everyday objects from falling apples to orbiting planets.</div>
+            
+            <h2>8.2 Newton's First Law (Law of Inertia)</h2>
+            <div class="definition-box">
+                <strong>📌 Newton's First Law:</strong> An object at rest stays at rest, and an object in motion stays in motion with the same speed and in the same direction, unless acted upon by an unbalanced (net) force.
+            </div>
+            
+            <h3>Inertia</h3>
+            <div class="definition-box">
+                <strong>📌 Inertia:</strong> The tendency of an object to resist changes in its state of motion. The greater the mass, the greater the inertia.
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Examples of Newton's First Law:</strong><br>
+                • A book on a table stays at rest until someone pushes it.<br>
+                • Passengers lurch forward when a bus suddenly stops (their bodies want to keep moving).<br>
+                • A ball rolling on a rough surface eventually stops due to friction (unbalanced force).<br>
+                • In space, a spacecraft keeps moving without fuel (no friction).
+            </div>
+            
+            <table>
+                <tr><th>Mass</th><th>Inertia</th></tr>
+                <tr><td>Small mass</td><td>Small inertia – easy to start/stop</td></tr>
+                <tr><td>Large mass</td><td>Large inertia – difficult to start/stop</td></tr>
+            </table>
+            
+            <h2>8.3 Newton's Second Law (F = ma)</h2>
+            <div class="definition-box">
+                <strong>📌 Newton's Second Law:</strong> The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.<br>
+                <div class="formula" style="margin:0.5rem 0;">F = m × a</div>
+                Where: F = net force (N), m = mass (kg), a = acceleration (m/s²)
+            </div>
+            
+            <p><strong>Key Relationships:</strong></p>
+            <ul>
+                <li>Greater force → Greater acceleration (directly proportional)</li>
+                <li>Greater mass → Smaller acceleration (inversely proportional)</li>
+                <li>1 N = 1 kg × 1 m/s²</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>📐 Example 1:</strong> A 5 kg object experiences a net force of 20 N. Find its acceleration.<br>
+                a = F/m = 20/5 = <strong>4 m/s²</strong>
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example 2:</strong> A car of mass 1000 kg accelerates at 3 m/s². Find the net force.<br>
+                F = ma = 1000 × 3 = <strong>3000 N</strong>
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example 3:</strong> A force of 50 N gives an object an acceleration of 10 m/s². Find its mass.<br>
+                m = F/a = 50/10 = <strong>5 kg</strong>
+            </div>
+            
+            <h2>8.4 Newton's Third Law (Action-Reaction)</h2>
+            <div class="definition-box">
+                <strong>📌 Newton's Third Law:</strong> For every action, there is an equal and opposite reaction. Forces always occur in pairs.
+            </div>
+            
+            <p><strong>Characteristics of Action-Reaction Pairs:</strong></p>
+            <ul>
+                <li>Equal in magnitude</li>
+                <li>Opposite in direction</li>
+                <li>Act on <strong>different</strong> objects (never cancel each other)</li>
+                <li>Same type of force (both gravitational, both contact, etc.)</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>📐 Examples of Newton's Third Law:</strong><br>
+                • <strong>Rocket propulsion:</strong> Rocket pushes gas backward → Gas pushes rocket forward<br>
+                • <strong>Walking:</strong> Foot pushes ground backward → Ground pushes foot forward<br>
+                • <strong>Swimming:</strong> Hands push water backward → Water pushes swimmer forward<br>
+                • <strong>Jumping:</strong> Legs push ground down → Ground pushes person up<br>
+                • <strong>Recoil of a gun:</strong> Bullet pushed forward → Gun pushed backward
+            </div>
+            
+            <div class="key-point">
+                <strong>⚠️ Common Misconception:</strong> Action and reaction forces do NOT cancel because they act on different objects. If they canceled, nothing would ever move!
+            </div>
+            
+            <h2>8.5 Applications of Newton's Laws</h2>
+            
+            <h3>Linear Momentum</h3>
+            <div class="definition-box">
+                <strong>📌 Momentum (p):</strong> The product of mass and velocity.<br>
+                <div class="formula" style="margin:0.5rem 0;">p = m × v</div>
+                Unit: kg·m/s &nbsp;|&nbsp; Momentum is a <strong>vector</strong> quantity.
+            </div>
+            
+            <div class="formula">F = Δp / Δt &nbsp;&nbsp;(Force = Rate of change of momentum)</div>
+            
+            <h3>Conservation of Momentum</h3>
+            <div class="definition-box">
+                In a closed system (no external forces), the total momentum before an interaction equals the total momentum after.
+            </div>
+            <div class="formula">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A 2 kg ball moving at 5 m/s collides with a stationary 3 kg ball. After collision, the 2 kg ball moves at 1 m/s. Find the velocity of the 3 kg ball.<br><br>
+                Before: (2 × 5) + (3 × 0) = 10 kg·m/s<br>
+                After: (2 × 1) + (3 × v) = 2 + 3v<br>
+                10 = 2 + 3v → 3v = 8 → v = <strong>2.67 m/s</strong>
+            </div>
+            
+            <h2>8.6 Impulse</h2>
+            <div class="definition-box">
+                <strong>📌 Impulse (J):</strong> The product of force and the time for which it acts. It equals the change in momentum.<br>
+                <div class="formula" style="margin:0.5rem 0;">J = F × Δt = Δp = m(v - u)</div>
+                Unit: N·s (Newton-second)
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A force of 100 N acts on a ball for 0.5 seconds. Find the impulse and the change in momentum.<br>
+                J = 100 × 0.5 = <strong>50 N·s</strong> (Change in momentum = 50 kg·m/s)
+            </div>
+            
+            <h2>8.7 Tension in Connected Bodies</h2>
+            <p>When objects are connected by a rope or string, the tension (T) is the same throughout the rope (assuming massless rope and frictionless pulley).</p>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> Two masses of 3 kg and 5 kg are connected over a frictionless pulley. Find the acceleration and tension.<br><br>
+                Net force = (5 - 3) × 9.8 = 19.6 N<br>
+                Total mass = 3 + 5 = 8 kg<br>
+                a = F/m = 19.6/8 = <strong>2.45 m/s²</strong><br>
+                T = 3 × (9.8 + 2.45) = <strong>36.75 N</strong>
+            </div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 8 Summary</h3>
+                <ul>
+                    <li><strong>1st Law (Inertia):</strong> Object stays at rest/motion unless net force acts</li>
+                    <li><strong>2nd Law:</strong> F = ma (Force = mass × acceleration)</li>
+                    <li><strong>3rd Law:</strong> Action = Reaction (equal and opposite, on different objects)</li>
+                    <li><strong>Momentum:</strong> p = mv (kg·m/s)</li>
+                    <li><strong>Impulse:</strong> J = FΔt = Δp (N·s)</li>
+                    <li><strong>Conservation of Momentum:</strong> Total momentum before = after (in closed system)</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 WAEC/NECO Tip:</strong> F = ma problems, momentum conservation, and impulse calculations appear frequently!
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter7-simple-machines.html">← Previous: Chapter 7 - Simple Machines</a>
+            <a href="chapter9-work-energy.html" class="next-chapter">Next: Chapter 9 - Work, Energy & Power →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ 500+ Solved Examples</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" id="upgradeBtn" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium access is NOT automatic. Access will be granted after we verify the payment.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #999;">Premium activates within 24 hours after payment confirmation.</p>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about Newton's Laws!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What is Newton\'s first law?')">🍎 1st Law</span>
+        <span class="chip" onclick="askThis('Calculate force: mass=5kg, acceleration=3m/s²')">💪 F=ma</span>
+        <span class="chip" onclick="askThis('What is momentum?')">⚡ Momentum</span>
+        <span class="chip" onclick="askThis('Conservation of momentum example')">🔄 Conservation</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY_ACCOUNT = { bank: "Opay (Paycom)", accountNumber: "8052059012", accountName: "Alade Timothy Olarewaju", amount: 1500 };
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    currentUser.premium = isPremium; currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    function updateUI() {
+        if (isPremium) {
+            document.getElementById('premiumBadge').textContent = '👑 Premium Active';
+            document.getElementById('premiumBadge').style.background = '#00a86b';
+            const pc = document.getElementById('premiumCard');
+            if (pc) pc.innerHTML = `<h3 style="color:#0f3460;">👑 Premium Active</h3><p>✅ Full access to all chapters!</p><button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>`;
+        }
+    }
+    
+    function copyAccountNumber() { navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber); alert('✅ Account number copied: ' + OPAY_ACCOUNT.accountNumber); }
+    function openPaymentModal() { if (isPremium) { alert('Already Premium!'); return; } document.getElementById('payerName').value = currentUser.name || ''; document.getElementById('payerEmail').value = currentUser.email || ''; document.getElementById('paymentModal').style.display = 'flex'; }
+    function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; document.getElementById('paymentStatus').style.display = 'none'; }
+    
+    function submitPaymentRequest() {
+        const name = document.getElementById('payerName').value.trim();
+        const email = document.getElementById('payerEmail').value.trim();
+        const ref = document.getElementById('transactionRef').value.trim();
+        const amount = document.getElementById('paymentAmount').value.trim();
+        const sd = document.getElementById('paymentStatus');
+        if (!name || !email) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = '❌ Enter name and email.'; return; }
+        if (!ref) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = '❌ Enter Opay reference.'; return; }
+        if (amount != OPAY_ACCOUNT.amount) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = `❌ Amount must be ₦${OPAY_ACCOUNT.amount}.`; return; }
+        if (paymentRequests.find(r => r.reference === ref)) { sd.style.display = 'block'; sd.className = 'payment-status status-pending'; sd.innerHTML = '⏳ Reference already submitted.'; return; }
+        paymentRequests.push({ id: 'PAY_' + Date.now(), userId: currentUser.id, userName: name, userEmail: email, reference: ref, amount: parseFloat(amount), status: 'pending', submittedAt: new Date().toISOString() });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        sd.style.display = 'block'; sd.className = 'payment-status status-pending';
+        sd.innerHTML = `⏳ Payment submitted! Reference: ${ref}. Access after verification.`;
+    }
+    
+    function addMessage(text, sender) {
+        const div = document.createElement('div'); div.className = `message ${sender}-msg`; div.innerHTML = text;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('aiBody').scrollTop = document.getElementById('aiBody').scrollHeight;
+    }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('first law') || q.includes('1st law')) return `🍎 Newton's 1st Law (Inertia): Object stays at rest/motion unless net force acts.`;
+        if (q.includes('second law') || q.includes('2nd law')) return `💪 Newton's 2nd Law: F = ma. Force = mass × acceleration.`;
+        if (q.includes('third law') || q.includes('3rd law')) return `🔄 Newton's 3rd Law: Action = Reaction (equal, opposite, on different objects).`;
+        if (q.includes('force') && q.match(/\d/)) {
+            const nums = q.match(/\d+(?:\.\d+)?/g);
+            if (nums && nums.length >= 2) return `💪 F = ma = ${nums[0]} × ${nums[1]} = ${parseFloat(nums[0])*parseFloat(nums[1])} N`;
+        }
+        if (q.includes('momentum')) return `⚡ Momentum = mass × velocity (p = mv). Unit: kg·m/s. Vector quantity.`;
+        if (q.includes('impulse')) return `💥 Impulse = Force × time = Change in momentum. J = FΔt = Δp.`;
+        if (q.includes('conservation of momentum')) return `🔄 Conservation of Momentum: Total momentum before = total momentum after (closed system).`;
+        if (q.includes('hello') || q.includes('hi')) return `👋 Hello ${currentUser.name.split(' ')[0]}! Ask me about Newton's Laws!`;
+        return `🤔 Try: "Newton's second law" or "Calculate force: 5kg, 3m/s²" or "What is momentum?"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput'); const q = input.value.trim(); if (!q) return;
+        addMessage(q, 'user'); input.value = '';
+        if (!isPremium) {
+            sessionQuestions++; currentUser.questions = sessionQuestions;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const ui = users.findIndex(u => u.id === currentUser.id);
+            if (ui !== -1) { users[ui].questions = sessionQuestions; localStorage.setItem('physics_users', JSON.stringify(users)); }
+            if (sessionQuestions >= MAX_FREE) setTimeout(() => addMessage('⚠️ Free limit reached! Upgrade (₦1,500) Opay: 8052059012', 'ai'), 300);
+        }
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display = 'none'; document.getElementById('floatingBtn').style.display = 'flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display = 'block'; document.getElementById('floatingBtn').style.display = 'none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    window.askAI = askAI; window.askThis = askThis; window.closeAI = closeAI; window.openAI = openAI;
+    window.openPaymentModal = openPaymentModal; window.closePaymentModal = closePaymentModal;
+    window.submitPaymentRequest = submitPaymentRequest; window.copyAccountNumber = copyAccountNumber; window.logout = logout;
+    updateUI();
+</script>
+</body>
+</html>

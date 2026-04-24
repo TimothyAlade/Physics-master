@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Measurement | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-locked { position: relative; margin: 2rem 0; padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border: 1px dashed #ccc; }
+        .blur-content { filter: blur(4px); user-select: none; pointer-events: none; opacity: 0.6; }
+        .lock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%; padding: 1rem; }
+        .lock-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+
+        /* AI Widget */
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Master SS1-SS3 Physics | Chapter 2: Measurement</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS1 Physics</a> › <strong>Chapter 2: Measurement</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 2: Measurement</h1>
+            <div class="chapter-meta">
+                <span>📘 SS1 First Term</span>
+                <span>⏱️ Reading: 30 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Define measurement and its importance in physics</li>
+                <li>Distinguish between fundamental and derived quantities</li>
+                <li>State the 7 fundamental quantities and their SI units</li>
+                <li>Identify common measuring instruments</li>
+                <li>Explain measurement errors</li>
+                <li>Differentiate between accuracy and precision</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>2.1 What is Measurement?</h2>
+            <div class="definition-box">
+                <strong>📌 Measurement:</strong> The process of finding the size, amount, or quantity of something using numbers and standard units.
+            </div>
+            <p>Without measurement, physics cannot work. Examples: length of a table, mass of rice, temperature of water.</p>
+            <div class="key-point"><strong>💡 Key Idea:</strong> Physics is only as good as the measurements behind it.</div>
+            
+            <h2>2.2 Physical Quantities</h2>
+            <div class="definition-box"><strong>📌 Physical Quantity:</strong> Anything that can be measured and expressed with a number and a unit.</div>
+            <p>Examples: Length (5m), Mass (10kg), Time (30s), Temperature (25°C).</p>
+            
+            <h2>2.3 Fundamental and Derived Quantities</h2>
+            <h3>📊 Fundamental Quantities (7 total)</h3>
+            <table>
+                <tr><th>Quantity</th><th>SI Unit</th><th>Symbol</th></tr>
+                <tr><td>Length</td><td>metre</td><td>m</td></tr>
+                <tr><td>Mass</td><td>kilogram</td><td>kg</td></tr>
+                <tr><td>Time</td><td>second</td><td>s</td></tr>
+                <tr><td>Electric Current</td><td>ampere</td><td>A</td></tr>
+                <tr><td>Temperature</td><td>kelvin</td><td>K</td></tr>
+                <tr><td>Amount of Substance</td><td>mole</td><td>mol</td></tr>
+                <tr><td>Luminous Intensity</td><td>candela</td><td>cd</td></tr>
+            </table>
+            
+            <h3>📐 Derived Quantities</h3>
+            <table>
+                <tr><th>Quantity</th><th>Formula</th><th>Unit</th></tr>
+                <tr><td>Area</td><td>length × length</td><td>m²</td></tr>
+                <tr><td>Volume</td><td>length³</td><td>m³</td></tr>
+                <tr><td>Speed</td><td>distance/time</td><td>m/s</td></tr>
+                <tr><td>Force</td><td>mass × acceleration</td><td>N</td></tr>
+                <tr><td>Density</td><td>mass/volume</td><td>kg/m³</td></tr>
+            </table>
+            
+            <h2>2.4 SI Units & Prefixes</h2>
+            <p>SI units (Système International) provide a universal standard.</p>
+            <table>
+                <tr><th>Prefix</th><th>Symbol</th><th>Multiplier</th></tr>
+                <tr><td>kilo</td><td>k</td><td>1,000</td></tr>
+                <tr><td>centi</td><td>c</td><td>0.01</td></tr>
+                <tr><td>milli</td><td>m</td><td>0.001</td></tr>
+                <tr><td>micro</td><td>µ</td><td>0.000001</td></tr>
+            </table>
+            
+            <h2>2.5 Measuring Instruments</h2>
+            <table>
+                <tr><th>Instrument</th><th>Measures</th></tr>
+                <tr><td>Metre Rule</td><td>Length</td></tr>
+                <tr><td>Measuring Cylinder</td><td>Volume</td></tr>
+                <tr><td>Stopwatch</td><td>Time</td></tr>
+                <tr><td>Beam Balance</td><td>Mass</td></tr>
+                <tr><td>Thermometer</td><td>Temperature</td></tr>
+            </table>
+            
+            <!-- PREMIUM SECTION -->
+            <div class="premium-locked" id="premiumSection1">
+                <div class="blur-content">
+                    <h3>🔬 Vernier Caliper & Micrometer (Premium)</h3>
+                    <p><strong>Vernier Caliper:</strong> Accuracy 0.01cm. Reading = Main scale + (Vernier × 0.01cm)</p>
+                    <p><strong>Micrometer:</strong> Accuracy 0.01mm. Reading = Main scale + (Circular × 0.01mm)</p>
+                </div>
+                <div class="lock-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <h3>Premium Content</h3>
+                    <button class="btn-premium" style="width:auto; padding:0.8rem 2rem;" onclick="upgradePremium()">🔓 Unlock ₦1,500</button>
+                </div>
+            </div>
+            
+            <h2>2.6 Errors in Measurement</h2>
+            <table>
+                <tr><th>Error Type</th><th>Description</th></tr>
+                <tr><td>Systematic</td><td>Consistent error (faulty instrument)</td></tr>
+                <tr><td>Random</td><td>Unpredictable variations</td></tr>
+                <tr><td>Parallax</td><td>Viewing scale from angle</td></tr>
+                <tr><td>Zero Error</td><td>Instrument not at zero</td></tr>
+            </table>
+            
+            <h2>2.7 Accuracy vs Precision</h2>
+            <div class="definition-box">
+                <strong>🎯 Accuracy:</strong> Closeness to true value<br>
+                <strong>📊 Precision:</strong> Consistency of measurements
+            </div>
+            <div class="key-point"><strong>🎯 WAEC Tip:</strong> Questions on accuracy vs precision and percentage error are common!</div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 2 Summary</h3>
+                <ul>
+                    <li>7 Fundamental Quantities: Length, Mass, Time, Current, Temp, Amount, Luminous Intensity</li>
+                    <li>Derived quantities: Area, Volume, Speed, Force, Density</li>
+                    <li>Accuracy = closeness to true value; Precision = consistency</li>
+                </ul>
+            </div>
+        </article>
+        
+        <!-- NAVIGATION LINKS - WORKING -->
+        <div class="chapter-nav">
+            <a href="chapter1-introduction.html">← Previous: Chapter 1 - Introduction</a>
+            <a href="chapter3-scalars-vectors.html" class="next-chapter">Next: Chapter 3 - Scalars & Vectors →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ 500+ Solved Examples</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" onclick="upgradePremium()">🔓 Unlock Premium</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header">
+        <span>🤖 Physics AI</span>
+        <span onclick="closeAI()">✕</span>
+    </div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about measurement!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What are the 7 fundamental quantities?')">🔢 7 Quantities</span>
+        <span class="chip" onclick="askThis('What is accuracy and precision?')">🎯 Accuracy</span>
+        <span class="chip" onclick="askThis('Calculate percentage error for 152 and 150')">📊 % Error</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer>
+    <p>© 2024 PhysicsMaster.ng — All Chapters Connected</p>
+</footer>
+
+<script>
+    // Auth check
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+        currentUser = { id: 'guest', name: 'Student', premium: false, questions: 0 };
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+    
+    let isPremium = currentUser.premium || false;
+    
+    // Update UI
+    if (isPremium) {
+        document.getElementById('premiumBadge').textContent = '👑 Premium';
+        document.getElementById('premiumBadge').style.background = '#00a86b';
+        document.querySelectorAll('.premium-locked').forEach(el => {
+            el.innerHTML = el.querySelector('.blur-content').innerHTML;
+            el.style.border = 'none';
+            el.style.padding = '0';
+            el.style.background = 'transparent';
+        });
+    }
+    
+    // AI Functions
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = `message ${sender}-msg`;
+        div.innerHTML = text;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('aiBody').scrollTop = document.getElementById('aiBody').scrollHeight;
+    }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('fundamental') || q.includes('7')) return `🔢 7 Fundamental Quantities: Length(m), Mass(kg), Time(s), Current(A), Temp(K), Amount(mol), Luminous Intensity(cd)`;
+        if (q.includes('accuracy')) return `🎯 Accuracy = closeness to true value. Precision = consistency of measurements.`;
+        if (q.includes('vernier')) return `🔬 Vernier Caliper: Accuracy 0.01cm. Reading = Main scale + (Vernier × 0.01cm)`;
+        if (q.includes('percentage error')) {
+            const nums = q.match(/(\d+)/g);
+            if (nums && nums.length >= 2) {
+                const m = +nums[0], t = +nums[1];
+                return `📊 % Error = |${m}-${t}|/${t} × 100% = ${Math.abs(m-t)/t*100}%`;
+            }
+        }
+        if (q.includes('hello') || q.includes('hi')) return `👋 Hello! Ask me about measurement!`;
+        return `🤔 Try: "7 fundamental quantities" or "accuracy and precision" or "25+37"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput');
+        const q = input.value.trim();
+        if (!q) return;
+        addMessage(q, 'user');
+        input.value = '';
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display = 'none'; document.getElementById('floatingBtn').style.display = 'flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display = 'block'; document.getElementById('floatingBtn').style.display = 'none'; }
+    function upgradePremium() {
+        if (isPremium) return;
+        if (confirm('Upgrade to Premium for ₦1,500?')) {
+            isPremium = true;
+            currentUser.premium = true;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            location.reload();
+        }
+    }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    window.askAI = askAI;
+    window.askThis = askThis;
+    window.closeAI = closeAI;
+    window.openAI = openAI;
+    window.upgradePremium = upgradePremium;
+    window.logout = logout;
+</script>
+</body>
+</html>

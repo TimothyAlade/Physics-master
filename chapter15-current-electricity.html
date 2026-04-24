@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 15: Current Electricity | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 15: Current Electricity</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS3 Physics</a> › <strong>Chapter 15: Current Electricity</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 15: Current Electricity</h1>
+            <div class="chapter-meta">
+                <span>📙 SS3 First Term</span>
+                <span>⏱️ Reading: 40 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Apply Ohm's Law to advanced circuit problems</li>
+                <li>Analyze series and parallel circuits in detail</li>
+                <li>Calculate electrical power and energy</li>
+                <li>Explain electrical safety measures</li>
+                <li>Solve problems involving internal resistance</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>15.1 Ohm's Law (Advanced Applications)</h2>
+            <div class="definition-box">
+                <strong>📌 Ohm's Law:</strong> V = IR. The current through a conductor is directly proportional to the potential difference across it, provided temperature and other physical conditions remain constant.
+            </div>
+            <div class="formula">V = IR &nbsp;|&nbsp; I = V/R &nbsp;|&nbsp; R = V/I</div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A 20 Ω resistor has 5 V across it. Find the current.<br>
+                I = V/R = 5/20 = <strong>0.25 A</strong>
+            </div>
+            
+            <h2>15.2 Series Circuits</h2>
+            <div class="definition-box">
+                Components connected end-to-end. Same current flows through all components.
+            </div>
+            <ul>
+                <li><strong>Current:</strong> I = I₁ = I₂ = I₃ (same everywhere)</li>
+                <li><strong>Voltage:</strong> V = V₁ + V₂ + V₃ (divides)</li>
+                <li><strong>Resistance:</strong> R = R₁ + R₂ + R₃</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> 4 Ω, 6 Ω, and 10 Ω in series with 40 V supply. Find total R, current, and voltage across each.<br>
+                R = 4 + 6 + 10 = <strong>20 Ω</strong><br>
+                I = V/R = 40/20 = <strong>2 A</strong><br>
+                V₁ = 2×4=8V, V₂ = 2×6=12V, V₃ = 2×10=<strong>20V</strong>
+            </div>
+            
+            <h2>15.3 Parallel Circuits</h2>
+            <div class="definition-box">
+                Components connected across same two points. Same voltage across all branches.
+            </div>
+            <ul>
+                <li><strong>Voltage:</strong> V = V₁ = V₂ = V₃ (same across all)</li>
+                <li><strong>Current:</strong> I = I₁ + I₂ + I₃ (divides)</li>
+                <li><strong>Resistance:</strong> 1/R = 1/R₁ + 1/R₂ + 1/R₃</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> 3 Ω and 6 Ω in parallel with 12 V supply. Find total R, total I, and current in each branch.<br>
+                1/R = 1/3 + 1/6 = 3/6 → R = <strong>2 Ω</strong><br>
+                I = 12/2 = <strong>6 A</strong><br>
+                I₁ = 12/3 = 4A, I₂ = 12/6 = <strong>2A</strong>
+            </div>
+            
+            <h2>15.4 Electrical Power</h2>
+            <div class="definition-box">
+                <strong>📌 Electrical Power (P):</strong> The rate at which electrical energy is converted to other forms. SI Unit: <strong>Watt (W)</strong>.
+            </div>
+            <div class="formula">P = VI = I²R = V²/R</div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A 60 W bulb operates at 240 V. Find the current and resistance.<br>
+                I = P/V = 60/240 = <strong>0.25 A</strong><br>
+                R = V/I = 240/0.25 = <strong>960 Ω</strong>
+            </div>
+            
+            <h2>15.5 Electrical Energy</h2>
+            <div class="definition-box">
+                <strong>📌 Electrical Energy (E):</strong> The work done by an electric current. SI Unit: <strong>Joule (J)</strong>.<br>
+                Commercial unit: <strong>Kilowatt-hour (kWh)</strong>
+            </div>
+            <div class="formula">E = Pt = VIt = I²Rt = (V²/R)t</div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A 1000 W heater runs for 2 hours. Find energy consumed in kWh.<br>
+                E = 1000 × 2 = 2000 Wh = <strong>2 kWh</strong>
+            </div>
+            
+            <h2>15.6 Internal Resistance</h2>
+            <div class="definition-box">
+                <strong>📌 Internal Resistance (r):</strong> The resistance within a cell or battery that opposes current flow. It causes the terminal voltage to be less than the EMF when current flows.
+            </div>
+            <div class="formula">E = I(R + r) &nbsp;or&nbsp; E = V + Ir</div>
+            <p>Where: E = EMF (V), V = terminal voltage, I = current, R = external resistance, r = internal resistance</p>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A battery of EMF 12 V and internal resistance 0.5 Ω is connected to a 5.5 Ω resistor. Find current.<br>
+                I = E/(R+r) = 12/(5.5+0.5) = 12/6 = <strong>2 A</strong>
+            </div>
+            
+            <h2>15.7 Electrical Safety</h2>
+            <table>
+                <tr><th>Safety Device</th><th>Function</th></tr>
+                <tr><td><strong>Fuse</strong></td><td>Melts when current exceeds rated value, breaking circuit</td></tr>
+                <tr><td><strong>Circuit Breaker</strong></td><td>Automatically switches off when overload detected</td></tr>
+                <tr><td><strong>Earth Wire</strong></td><td>Provides low-resistance path to ground, preventing shock</td></tr>
+                <tr><td><strong>Double Insulation</strong></td><td>Two layers of insulation protecting user from live parts</td></tr>
+            </table>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 15 Summary</h3>
+                <ul>
+                    <li><strong>Ohm's Law:</strong> V = IR</li>
+                    <li><strong>Series:</strong> Same I, V divides, R = R₁+R₂</li>
+                    <li><strong>Parallel:</strong> Same V, I divides, 1/R = 1/R₁+1/R₂</li>
+                    <li><strong>Power:</strong> P = VI = I²R = V²/R</li>
+                    <li><strong>Energy:</strong> E = Pt = VIt (Joules or kWh)</li>
+                    <li><strong>Internal Resistance:</strong> E = I(R+r), V = E - Ir</li>
+                </ul>
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter14-basic-electricity.html">← Previous: Chapter 14 - Basic Electricity</a>
+            <a href="chapter16-electromagnetism.html" class="next-chapter">Next: Chapter 16 - Electromagnetism →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium access is NOT automatic.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about current electricity!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('Calculate power: V=240V, I=0.5A')">⚡ P=VI</span>
+        <span class="chip" onclick="askThis('Series circuit: 4Ω, 6Ω, 10Ω, V=40V')">🔗 Series</span>
+        <span class="chip" onclick="askThis('Parallel circuit: 3Ω, 6Ω, V=12V')">🔗 Parallel</span>
+        <span class="chip" onclick="askThis('Internal resistance: E=12V, r=0.5Ω, R=5.5Ω')">🔋 Internal R</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY_ACCOUNT = { bank: "Opay (Paycom)", accountNumber: "8052059012", accountName: "Alade Timothy Olarewaju", amount: 1500 };
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    currentUser.premium = isPremium; currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    function updateUI() { if (isPremium) { document.getElementById('premiumBadge').textContent = '👑 Premium'; document.getElementById('premiumBadge').style.background = '#00a86b'; const pc = document.getElementById('premiumCard'); if (pc) pc.innerHTML = `<h3>👑 Premium</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>`; } }
+    function copyAccountNumber() { navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber); alert('✅ Copied'); }
+    function openPaymentModal() { if (isPremium) { alert('Already Premium!'); return; } document.getElementById('payerName').value = currentUser.name || ''; document.getElementById('payerEmail').value = currentUser.email || ''; document.getElementById('paymentModal').style.display = 'flex'; }
+    function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; document.getElementById('paymentStatus').style.display = 'none'; }
+    function submitPaymentRequest() {
+        const n = document.getElementById('payerName').value.trim(), e = document.getElementById('payerEmail').value.trim(), r = document.getElementById('transactionRef').value.trim(), a = document.getElementById('paymentAmount').value.trim(), sd = document.getElementById('paymentStatus');
+        if (!n||!e) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter name/email.'; return; }
+        if (!r) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter reference.'; return; }
+        if (a!=OPAY_ACCOUNT.amount) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Amount must be ₦'+OPAY_ACCOUNT.amount; return; }
+        if (paymentRequests.find(p=>p.reference===r)) { sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Already submitted.'; return; }
+        paymentRequests.push({ id:'PAY_'+Date.now(), userId:currentUser.id, userName:n, userEmail:e, reference:r, amount:parseFloat(a), status:'pending', submittedAt:new Date().toISOString() });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Submitted! Verified within 24h.';
+    }
+    
+    function addMessage(t, s) { const d = document.createElement('div'); d.className=`message ${s}-msg`; d.innerHTML=t; document.getElementById('chatMessages').appendChild(d); document.getElementById('aiBody').scrollTop=document.getElementById('aiBody').scrollHeight; }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('power') && q.match(/\d/)) { const n = q.match(/\d+/g); if (n && n.length>=2) return `⚡ P = VI = ${n[0]} × ${n[1]} = ${parseFloat(n[0])*parseFloat(n[1])} W`; }
+        if (q.includes('series') && q.match(/\d/)) { const n = q.match(/\d+/g); if (n && n.length>=3) { const r = parseFloat(n[0])+parseFloat(n[1])+parseFloat(n[2]); const i = parseFloat(n[3])/r; return `🔗 Series: R=${r}Ω, I=${i.toFixed(1)}A, V₁=${(i*parseFloat(n[0])).toFixed(0)}V, V₂=${(i*parseFloat(n[1])).toFixed(0)}V, V₃=${(i*parseFloat(n[2])).toFixed(0)}V`; } }
+        if (q.includes('parallel') && q.match(/\d/)) { const n = q.match(/\d+/g); if (n && n.length>=3) { const r = 1/(1/parseFloat(n[0])+1/parseFloat(n[1])); const i = parseFloat(n[2])/r; return `🔗 Parallel: R=${r.toFixed(1)}Ω, I=${i.toFixed(1)}A, I₁=${(parseFloat(n[2])/parseFloat(n[0])).toFixed(1)}A, I₂=${(parseFloat(n[2])/parseFloat(n[1])).toFixed(1)}A`; } }
+        if (q.includes('internal resistance')) { const n = q.match(/\d+/g); if (n && n.length>=3) { const i = parseFloat(n[0])/(parseFloat(n[1])+parseFloat(n[2])); return `🔋 I = E/(R+r) = ${n[0]}/(${n[1]}+${n[2]}) = ${i.toFixed(1)} A`; } }
+        if (q.includes('hello')||q.includes('hi')) return `👋 Hello! Ask me about electricity!`;
+        return `🤔 Try: "Calculate power: V=240, I=0.5" or "Series circuit: 4,6,10,V=40" or "Internal resistance"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput'), q = input.value.trim(); if (!q) return;
+        addMessage(q, 'user'); input.value = '';
+        if (!isPremium) { sessionQuestions++; currentUser.questions=sessionQuestions; sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); let users=JSON.parse(localStorage.getItem('physics_users'))||[]; const ui=users.findIndex(u=>u.id===currentUser.id); if(ui!==-1){users[ui].questions=sessionQuestions; localStorage.setItem('physics_users',JSON.stringify(users));} if(sessionQuestions>=MAX_FREE) setTimeout(()=>addMessage('⚠️ Free limit! Upgrade ₦1,500 Opay:8052059012','ai'),300); }
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display='none'; document.getElementById('floatingBtn').style.display='flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display='block'; document.getElementById('floatingBtn').style.display='none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    
+    window.askAI=askAI; window.askThis=askThis; window.closeAI=closeAI; window.openAI=openAI;
+    window.openPaymentModal=openPaymentModal; window.closePaymentModal=closePaymentModal;
+    window.submitPaymentRequest=submitPaymentRequest; window.copyAccountNumber=copyAccountNumber; window.logout=logout;
+    updateUI();
+</script>
+</body>
+</html>

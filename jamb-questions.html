@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50 JAMB Physics Questions | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 2rem; }
+        .header { background: linear-gradient(135deg, #0f3460, #1a4a7a); color: white; padding: 3rem 2rem; text-align: center; border-radius: 16px; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.2rem; }
+        .question-card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 4px solid #0f3460; }
+        .question-card h3 { color: #0f3460; margin-bottom: 0.5rem; }
+        .answer { background: #d4edda; padding: 0.8rem 1rem; border-radius: 8px; margin-top: 0.8rem; border-left: 3px solid #00a86b; }
+        .answer strong { color: #155724; }
+        .topic-badge { display: inline-block; background: #e8f4f8; color: #0f3460; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; margin-bottom: 0.5rem; }
+        .stats { background: white; border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 2rem; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><h1>⚡ PhysicsMaster.ng</h1></div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="formula-sheet.html">📐 Formula Sheet</a>
+        <a href="jamb-questions.html">📝 JAMB Q&A</a>
+        <a href="tricky-questions.html">🧠 Tricky Q&A</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="header">
+        <h1>📝 50 Likely JAMB Physics Questions & Answers</h1>
+        <p style="margin-top:1rem; opacity:0.9;">Based on past questions (2010–2024) • Covers all major topics</p>
+    </div>
+
+    <div class="stats">
+        <strong>📊 Topics Covered:</strong> Mechanics (15), Heat (10), Waves (8), Electricity (10), Modern Physics (7)
+    </div>
+
+    <div id="questionsContainer"></div>
+</div>
+
+<footer><p>© 2024 PhysicsMaster.ng — Practice Makes Perfect!</p></footer>
+
+<script>
+    const questions = [
+        { topic:"Mechanics", q:"A car accelerates uniformly from rest at 2 m/s² for 10 seconds. What is the distance covered?", a:"100 m (s = ut + ½at² = 0 + ½×2×100 = 100 m)" },
+        { topic:"Mechanics", q:"A ball is thrown vertically upward with a velocity of 20 m/s. How high will it go? (g = 10 m/s²)", a:"20 m (v² = u² - 2gh → 0 = 400 - 20h → h = 20 m)" },
+        { topic:"Mechanics", q:"What is the weight of a 50 kg mass on Earth? (g = 10 m/s²)", a:"500 N (W = mg = 50 × 10)" },
+        { topic:"Mechanics", q:"A force of 100 N acts on a body of mass 25 kg. Find the acceleration.", a:"4 m/s² (a = F/m = 100/25)" },
+        { topic:"Mechanics", q:"The momentum of a 2 kg object moving at 5 m/s is:", a:"10 kg·m/s (p = mv = 2×5)" },
+        { topic:"Mechanics", q:"Which of Newton's laws explains why passengers lurch forward when a bus stops suddenly?", a:"Newton's First Law (Inertia)" },
+        { topic:"Mechanics", q:"A machine has MA = 6 and VR = 10. Its efficiency is:", a:"60% (η = MA/VR × 100% = 6/10 × 100)" },
+        { topic:"Mechanics", q:"The SI unit of work is:", a:"Joule (J)" },
+        { topic:"Mechanics", q:"A 5 kg object is lifted through 4 m. Calculate work done. (g = 10 m/s²)", a:"200 J (W = mgh = 5×10×4)" },
+        { topic:"Mechanics", q:"Pressure is defined as:", a:"Force per unit area (P = F/A)" },
+        { topic:"Mechanics", q:"Density of a substance is 2 g/cm³. In SI units, this is:", a:"2000 kg/m³" },
+        { topic:"Mechanics", q:"The velocity ratio of an inclined plane of length 5 m and height 2 m is:", a:"2.5 (VR = L/h = 5/2)" },
+        { topic:"Mechanics", q:"A body of mass 10 kg moves with velocity 3 m/s. Its kinetic energy is:", a:"45 J (KE = ½×10×9 = 45)" },
+        { topic:"Mechanics", q:"Power is measured in:", a:"Watts (W)" },
+        { topic:"Mechanics", q:"The centripetal force on an object moving in a circle is directed:", a:"Toward the center of the circle" },
+        { topic:"Heat", q:"Which temperature scale has absolute zero as its starting point?", a:"Kelvin scale" },
+        { topic:"Heat", q:"Convert 27°C to Kelvin.", a:"300 K (K = °C + 273)" },
+        { topic:"Heat", q:"The specific heat capacity of water is:", a:"4200 J/(kg·K)" },
+        { topic:"Heat", q:"According to Charles's Law, volume is directly proportional to:", a:"Absolute temperature (at constant pressure)" },
+        { topic:"Heat", q:"Boyle's Law states that at constant temperature, pressure is:", a:"Inversely proportional to volume" },
+        { topic:"Heat", q:"The process of a solid changing directly to gas is called:", a:"Sublimation" },
+        { topic:"Heat", q:"Latent heat of fusion is the heat required to:", a:"Change solid to liquid without temperature change" },
+        { topic:"Heat", q:"Which method of heat transfer does NOT require a medium?", a:"Radiation" },
+        { topic:"Heat", q:"A bimetallic strip bends when heated because:", a:"The two metals expand at different rates" },
+        { topic:"Heat", q:"Heat transfer by convection occurs in:", a:"Liquids and gases only" },
+        { topic:"Waves", q:"The speed of sound in air is approximately:", a:"340 m/s" },
+        { topic:"Waves", q:"A wave has frequency 50 Hz and wavelength 2 m. Its speed is:", a:"100 m/s (v = fλ = 50×2)" },
+        { topic:"Waves", q:"Sound waves are examples of:", a:"Longitudinal waves" },
+        { topic:"Waves", q:"Light waves are examples of:", a:"Transverse waves / Electromagnetic waves" },
+        { topic:"Waves", q:"Echo is produced by:", a:"Reflection of sound" },
+        { topic:"Waves", q:"The audible frequency range for humans is:", a:"20 Hz – 20,000 Hz" },
+        { topic:"Waves", q:"Which electromagnetic wave has the shortest wavelength?", a:"Gamma rays" },
+        { topic:"Waves", q:"The relationship between frequency (f) and period (T) is:", a:"f = 1/T" },
+        { topic:"Electricity", q:"Ohm's Law states that V = ?", a:"V = IR" },
+        { topic:"Electricity", q:"Three 6Ω resistors in parallel have total resistance of:", a:"2Ω (1/R = 1/6+1/6+1/6 = 3/6)" },
+        { topic:"Electricity", q:"A 60W bulb operates at 240V. The current flowing is:", a:"0.25 A (I = P/V = 60/240)" },
+        { topic:"Electricity", q:"The SI unit of electric charge is:", a:"Coulomb (C)" },
+        { topic:"Electricity", q:"In a series circuit, the current is:", a:"The same through all components" },
+        { topic:"Electricity", q:"A fuse protects a circuit by:", a:"Melting when current exceeds its rating" },
+        { topic:"Electricity", q:"The device that converts electrical energy to mechanical energy is:", a:"Electric motor" },
+        { topic:"Electricity", q:"Alternating current (AC) differs from DC because:", a:"AC changes direction periodically" },
+        { topic:"Electricity", q:"The earth wire is colored:", a:"Green and yellow stripes" },
+        { topic:"Electricity", q:"Electrical power can be calculated as:", a:"P = IV = I²R = V²/R" },
+        { topic:"Modern Physics", q:"Alpha particles are:", a:"Helium nuclei (2 protons + 2 neutrons)" },
+        { topic:"Modern Physics", q:"The half-life of a radioactive substance is the time for:", a:"Half the nuclei to decay" },
+        { topic:"Modern Physics", q:"Nuclear fission involves:", a:"Splitting a heavy nucleus into lighter ones" },
+        { topic:"Modern Physics", q:"The atomic number (Z) represents:", a:"Number of protons in the nucleus" },
+        { topic:"Modern Physics", q:"Gamma rays are:", a:"Electromagnetic radiation with high penetrating power" },
+        { topic:"Modern Physics", q:"In a nuclear reactor, the function of the moderator is to:", a:"Slow down neutrons" },
+        { topic:"Modern Physics", q:"X-rays were discovered by:", a:"Wilhelm Röntgen (1895)" }
+    ];
+
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = questions.map((item, i) => `
+        <div class="question-card">
+            <span class="topic-badge">${item.topic}</span>
+            <h3>Q${i+1}: ${item.q}</h3>
+            <div class="answer"><strong>✅ Answer:</strong> ${item.a}</div>
+        </div>
+    `).join('');
+</script>
+</body>
+</html>

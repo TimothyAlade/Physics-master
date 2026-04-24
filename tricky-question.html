@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Tricky Physics Questions | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: white; text-decoration: none; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 2rem; }
+        .header { background: linear-gradient(135deg, #ff6b6b, #c0392b); color: white; padding: 3rem 2rem; text-align: center; border-radius: 16px; margin-bottom: 2rem; }
+        .question-card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 4px solid #ff6b6b; }
+        .question-card h3 { color: #c0392b; margin-bottom: 0.5rem; }
+        .answer { background: #d4edda; padding: 0.8rem 1rem; border-radius: 8px; margin-top: 0.8rem; border-left: 3px solid #00a86b; }
+        .trap { background: #fff3cd; padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><h1>⚡ PhysicsMaster.ng</h1></div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="formula-sheet.html">📐 Formulas</a>
+        <a href="jamb-questions.html">📝 JAMB</a>
+        <a href="tricky-questions.html">🧠 Tricky</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="header"><h1>🧠 30 Most Tricky Physics Questions</h1><p>Common traps students fall for — Don't be caught!</p></div>
+
+    <div id="questionsContainer"></div>
+</div>
+
+<footer><p>© 2024 PhysicsMaster.ng — Outsmart the Examiner!</p></footer>
+
+<script>
+    const questions = [
+        { q:"A feather and a coin are dropped in a vacuum. Which hits first?", trap:"Many say the coin — due to mass.", a:"They hit at the SAME time! In a vacuum, there is no air resistance. All objects fall at g = 9.8 m/s² regardless of mass." },
+        { q:"Is the mass of an object the same on Earth and the Moon?", trap:"Many confuse mass and weight.", a:"YES, mass is constant everywhere. WEIGHT changes because weight = mg, and g on the Moon is 1/6 of Earth's." },
+        { q:"When a ball is thrown upward, what is its acceleration at the highest point?", trap:"Many say zero — because it stops momentarily.", a:"Acceleration is STILL 9.8 m/s² DOWNWARD. The velocity is zero at the highest point, but gravity never stops!" },
+        { q:"Does a heavier object fall faster than a lighter one?", trap:"Common sense says yes.", a:"NO — in the absence of air resistance, all objects fall at the same rate (g). Galileo proved this at the Leaning Tower of Pisa." },
+        { q:"If you push a wall and it doesn't move, is work being done?", trap:"Some say yes because effort was applied.", a:"NO work is done. Work = Force × distance. Since distance = 0, work = 0. You may feel tired, but physics says zero work!" },
+        { q:"Can an object have zero velocity but non-zero acceleration?", trap:"Seems impossible.", a:"YES! At the highest point of a thrown ball, velocity = 0, but acceleration = 9.8 m/s² (gravity)." },
+        { q:"Ice floats on water. What does this tell you about its density?", trap:"Students sometimes say ice is 'lighter'.", a:"Ice is LESS DENSE than water (920 kg/m³ vs 1000 kg/m³). This is an anomalous property of water — it expands when freezing." },
+        { q:"If a car moves at constant speed, is there a net force on it?", trap:"Many think yes because it's moving.", a:"NO net force. According to Newton's 1st Law, constant velocity means balanced forces. Forces like engine thrust and friction cancel." },
+        { q:"What weighs more: 1 kg of feathers or 1 kg of iron?", trap:"Trick question — many say iron.", a:"THEY WEIGH THE SAME! Both are 1 kg. The difference is density and volume, not mass or weight." },
+        { q:"Can energy be destroyed?", trap:"Students think energy 'disappears' when used.", a:"NO. Energy is CONSERVED. It transforms from one form to another (e.g., electrical → heat + light in a bulb). Total energy remains constant." },
+        { q:"Does a moving object have inertia?", trap:"Many think only stationary objects have inertia.", a:"ALL objects have inertia, whether moving or stationary. Inertia is the resistance to change in motion." },
+        { q:"If Earth's gravity pulls everything down, why doesn't the Moon fall to Earth?", trap:"Good question — seems contradictory.", a:"The Moon IS falling toward Earth, but its tangential velocity keeps it in orbit. It's constantly 'missing' Earth due to its orbital speed." },
+        { q:"In a vacuum, which falls faster: a heavy ball or a light ball?", trap:"Intuition says heavy ball.", a:"BOTH fall at exactly the same rate. Without air resistance, g = 9.8 m/s² for ALL objects. This was demonstrated on the Moon by Apollo 15." },
+        { q:"If you have a cup of water and add ice that floats, will the water overflow when the ice melts?", trap:"Many say yes.", a:"NO — the water level stays the SAME! The ice displaces exactly its weight in water, which equals the volume of water it becomes when melted." },
+        { q:"Is temperature the same as heat?", trap:"Commonly confused.", a:"NO. Temperature measures hotness (K or °C). Heat is ENERGY transferred (J). A spark has high temperature but little heat; an ocean has low temperature but enormous heat." },
+        { q:"Can an object accelerate while moving at constant speed?", trap:"Seems impossible.", a:"YES! In UNIFORM CIRCULAR MOTION, speed is constant but direction changes → there IS acceleration (centripetal) toward the center." },
+        { q:"Which is more dangerous: touching a 1000 V line with low current, or 50 V with high current?", trap:"Students focus on voltage.", a:"The 50 V with HIGH CURRENT is more dangerous. Current (I), not voltage, kills. Even 0.1 A can be fatal." },
+        { q:"If a plane flies East at 500 km/h against a headwind of 500 km/h, what is its ground speed?", trap:"0 km/h? But how does it fly?", a:"Ground speed = 0 km/h! The plane would appear stationary from the ground. However, it still flies relative to the air." },
+        { q:"Why do astronauts appear weightless in space?", trap:"Many say 'because there's no gravity'.", a:"Gravity IS there! Astronauts APPEAR weightless because they are in FREE FALL around Earth. They and the spacecraft fall together." },
+        { q:"Does electricity travel at the speed of light?", trap:"Common misconception.", a:"Electric SIGNALS travel near light speed, but individual ELECTRONS drift very slowly (about 0.01 cm/s). The energy moves fast, not the electrons." },
+        { q:"If you drop a ball on a moving train, where does it land?", trap:"Depends on whether you ask the person on the train or outside.", a:"To someone ON the train, it falls straight down (relative to train). To someone OUTSIDE, it follows a parabolic path (projectile motion)." },
+        { q:"Can you have a single magnetic pole (monopole)?", trap:"Trick question.", a:"NO! Magnetic monopoles do NOT exist. Every magnet has both North and South poles. Cutting a magnet creates two smaller magnets, each with N-S." },
+        { q:"Why does a mirror reverse left and right but not up and down?", trap:"Philosophical twist.", a:"A mirror does NOT reverse left and right. It reverses FRONT and BACK. The 'left-right reversal' is our interpretation because we rotate objects to face the mirror." },
+        { q:"If you stand on a scale in an accelerating elevator, does your weight change?", trap:"Your mass doesn't change, but...", a:"Your APPARENT weight changes! Going up: scale reads MORE (you feel heavier). Going down: scale reads LESS (you feel lighter). In free fall: scale reads ZERO!" },
+        { q:"Does a battery store charge?", trap:"Common wording.", a:"A battery does NOT store charge. It stores CHEMICAL ENERGY that creates a potential difference (voltage) to drive charges through a circuit." },
+        { q:"What happens to the period of a pendulum if you double its length?", trap:"Students guess it doubles.", a:"Period INCREASES by √2 (about 1.41 times). T = 2π√(L/g), so T ∝ √L. Doubling L increases T by factor √2, not 2." },
+        { q:"Is the image in a plane mirror real or virtual?", trap:"It looks real.", a:"VIRTUAL. It cannot be projected on a screen. The image appears BEHIND the mirror at the same distance as the object is in front." },
+        { q:"If a tree falls in a forest with no one around, does it make a sound?", trap:"Philosophical.", a:"Physics answer: The tree produces SOUND WAVES (vibrations in air) regardless of listeners. But 'sound' as perception requires an ear and brain. The waves exist; the experience may not." },
+        { q:"Why is the sky blue?", trap:"Not reflection of the ocean.", a:"Rayleigh Scattering: Air molecules scatter short wavelengths (blue/violet) more than long wavelengths (red/orange). Our eyes are more sensitive to blue, so we see a blue sky." },
+        { q:"Can an object have negative kinetic energy?", trap:"Mathematical question.", a:"NO. KE = ½mv². Mass is always positive, and velocity squared is always positive. KE can never be negative. (Potential energy CAN be negative though.)" }
+    ];
+
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = questions.map((item, i) => `
+        <div class="question-card">
+            <h3>Q${i+1}: ${item.q}</h3>
+            <div class="trap">⚠️ <strong>Common Trap:</strong> ${item.trap}</div>
+            <div class="answer"><strong>✅ Correct Answer:</strong> ${item.a}</div>
+        </div>
+    `).join('');
+</script>
+</body>
+</html>

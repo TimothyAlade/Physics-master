@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 20: Practical Physics | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 20: Practical Physics 🎓</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS3 Physics</a> › <strong>Chapter 20: Practical Physics</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 20: Practical Physics</h1>
+            <div class="chapter-meta">
+                <span>📙 SS3 Second Term</span>
+                <span>⏱️ Reading: 50 mins</span>
+            </div>
+        </div>
+        
+        <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-bottom:2rem; border-left:4px solid #00d2ff;">
+            <h3 style="color:#0f3460;">🎯 What You'll Learn</h3>
+            <ul>
+                <li>Common physics experiments and their procedures</li>
+                <li>How to take accurate measurements</li>
+                <li>Graph plotting and data analysis</li>
+                <li>Verification of physics laws through experiments</li>
+                <li>Error analysis and precautions</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>20.1 Measurement Experiments</h2>
+            
+            <h3>Reading Vernier Calipers</h3>
+            <div class="definition-box">
+                <strong>📌 Vernier Caliper:</strong> Accuracy = 0.01 cm or 0.1 mm<br>
+                <strong>Reading =</strong> Main Scale + (Vernier Coincidence × 0.01 cm)
+            </div>
+            <div class="example-box">
+                <strong>📐 Example:</strong> Main scale = 2.3 cm, Vernier coincidence = 4<br>
+                Reading = 2.3 + (4 × 0.01) = <strong>2.34 cm</strong>
+            </div>
+            
+            <h3>Reading Micrometer Screw Gauge</h3>
+            <div class="definition-box">
+                <strong>📌 Micrometer:</strong> Accuracy = 0.01 mm or 0.001 cm<br>
+                <strong>Reading =</strong> Main Scale + (Circular Scale × 0.01 mm)
+            </div>
+            <div class="example-box">
+                <strong>📐 Example:</strong> Main scale = 5.5 mm, Circular scale = 28<br>
+                Reading = 5.5 + (28 × 0.01) = <strong>5.78 mm</strong>
+            </div>
+            
+            <h2>20.2 Density Experiment</h2>
+            <div class="formula">ρ = m / V</div>
+            <p><strong>Apparatus:</strong> Beam balance, measuring cylinder, water, irregular solid (stone)</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li>Measure mass of stone using beam balance (m)</li>
+                <li>Pour water into measuring cylinder, record initial volume (V₁)</li>
+                <li>Gently lower stone into water, record final volume (V₂)</li>
+                <li>Volume of stone = V₂ − V₁</li>
+                <li>Calculate density: ρ = m / (V₂ − V₁)</li>
+            </ol>
+            
+            <h2>20.3 Verification of Ohm's Law</h2>
+            <div class="formula">V = IR</div>
+            <p><strong>Apparatus:</strong> Battery, rheostat, ammeter, voltmeter, resistor, connecting wires</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li>Connect circuit with ammeter in series, voltmeter in parallel</li>
+                <li>Adjust rheostat to vary current</li>
+                <li>Record pairs of V and I readings</li>
+                <li>Plot graph of V (y-axis) against I (x-axis)</li>
+                <li>Straight line through origin confirms Ohm's Law</li>
+                <li>Slope = Resistance (R)</li>
+            </ol>
+            
+            <h2>20.4 Simple Pendulum Experiment</h2>
+            <div class="formula">T = 2π√(L/g) &nbsp;→&nbsp; T² = (4π²/g)L</div>
+            <p><strong>Apparatus:</strong> String, bob, clamp, stopwatch, metre rule</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li>Set pendulum length L (from pivot to center of bob)</li>
+                <li>Displace bob slightly (< 10°) and release</li>
+                <li>Time 20 complete oscillations → find period T</li>
+                <li>Repeat for different lengths</li>
+                <li>Plot graph of T² (y-axis) against L (x-axis)</li>
+                <li>Slope = 4π²/g → calculate g</li>
+            </ol>
+            
+            <h2>20.5 Focal Length of Convex Lens</h2>
+            <div class="formula">1/f = 1/u + 1/v</div>
+            <p><strong>Apparatus:</strong> Convex lens, screen, illuminated object, metre rule</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li>Place lens between object and screen</li>
+                <li>Adjust until sharp image formed on screen</li>
+                <li>Measure u (object to lens) and v (lens to screen)</li>
+                <li>Repeat for different u values</li>
+                <li>Calculate f using lens formula or plot 1/v vs 1/u</li>
+            </ol>
+            
+            <h2>20.6 Graph Work and Data Analysis</h2>
+            <div class="key-point">
+                <strong>📊 Graph Plotting Rules:</strong><br>
+                • Use appropriate scales (1 cm = 1, 2, 5, or 10 units)<br>
+                • Label axes with quantity and unit<br>
+                • Plot points with small crosses (×)<br>
+                • Draw best-fit straight line or smooth curve<br>
+                • Slope = Δy/Δx (use large triangle on line, NOT data points)<br>
+                • Intercept = where line crosses axis (x=0 or y=0)
+            </div>
+            
+            <h2>20.7 Common Practical Questions (WAEC/NECO)</h2>
+            <div class="example-box">
+                <strong>Q1:</strong> In a pendulum experiment, the following data was obtained: L = 100 cm, time for 20 oscillations = 40 s. Calculate the period and use it to find g.<br>
+                <strong>Answer:</strong> T = 40/20 = 2 s, T² = 4π²L/g → g = 4π²L/T² = 4×(3.14)²×1/4 = <strong>9.86 m/s²</strong>
+            </div>
+            <div class="example-box">
+                <strong>Q2:</strong> In an optics experiment, u = 30 cm and v = 60 cm. Calculate the focal length.<br>
+                <strong>Answer:</strong> 1/f = 1/30 + 1/60 = 3/60 → f = <strong>20 cm</strong>
+            </div>
+            
+            <h2>20.8 Precautions in Experiments</h2>
+            <ul>
+                <li>Take multiple readings and calculate average</li>
+                <li>Avoid parallax error (eye directly above scale)</li>
+                <li>Check for zero error on instruments before use</li>
+                <li>Use rigid supports to prevent unnecessary movement</li>
+                <li>Ensure connections are tight in electrical experiments</li>
+                <li>Record readings to appropriate decimal places</li>
+            </ul>
+            
+            <div style="background:#d4edda; padding:1.5rem; border-radius:12px; margin-top:2rem; text-align:center;">
+                <h2 style="color:#155724; border:none; padding:0;">🎓 Congratulations!</h2>
+                <p style="font-size:1.2rem; margin-top:1rem;">You've completed all <strong>20 Chapters</strong> of SS1-SS3 Physics!</p>
+                <p style="margin-top:0.5rem;">You're now ready for <strong>WAEC, NECO, and JAMB</strong> exams!</p>
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter19-revision-mechanics.html">← Previous: Chapter 19 - Revision Mechanics</a>
+            <a href="index.html" class="next-chapter">📚 Back to Library →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;"><li>✓ All 20 Chapters</li><li>✓ Unlimited AI Tutor</li><li>✓ WAEC/NECO Prep</li></ul>
+            <button class="btn-premium" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account:</strong> 8052059012 <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium is NOT automatic.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about practical physics!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('How to read a Vernier caliper?')">📏 Vernier</span>
+        <span class="chip" onclick="askThis('Simple pendulum: L=100cm, T=2s, find g')">⏰ Pendulum</span>
+        <span class="chip" onclick="askThis('Lens formula: u=30cm, v=60cm')">🔍 Lens</span>
+        <span class="chip" onclick="askThis('Density experiment procedure')">🧪 Density</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng — Complete Physics Curriculum 🎓</p></footer>
+
+<script>
+    const OPAY = { bank:"Opay", account:"8052059012", name:"Alade Timothy Olarewaju", amount:1500 };
+    let payments = JSON.parse(localStorage.getItem('payment_requests'))||[];
+    let user = JSON.parse(sessionStorage.getItem('currentUser'));
+    if(!user) window.location.href='login.html';
+    let users = JSON.parse(localStorage.getItem('physics_users'))||[];
+    let uData = users.find(u=>u.id===user.id);
+    if(!uData){ sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    let premium = uData.premium||false, qUsed = uData.questions||0, MAX=10;
+    user.premium=premium; user.questions=qUsed;
+    sessionStorage.setItem('currentUser',JSON.stringify(user));
+    
+    function updateUI(){ if(premium){ document.getElementById('premiumBadge').textContent='👑 Premium'; document.getElementById('premiumBadge').style.background='#00a86b'; let pc=document.getElementById('premiumCard'); if(pc) pc.innerHTML='<h3>👑 Premium</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href=\'index.html\'">📚 Library</button>'; } }
+    function copyAccountNumber(){ navigator.clipboard.writeText(OPAY.account); alert('✅ Copied'); }
+    function openPaymentModal(){ if(premium){ alert('Already Premium!'); return; } document.getElementById('payerName').value=user.name||''; document.getElementById('payerEmail').value=user.email||''; document.getElementById('paymentModal').style.display='flex'; }
+    function closePaymentModal(){ document.getElementById('paymentModal').style.display='none'; document.getElementById('paymentStatus').style.display='none'; }
+    function submitPaymentRequest(){
+        let n=document.getElementById('payerName').value.trim(), e=document.getElementById('payerEmail').value.trim(), r=document.getElementById('transactionRef').value.trim(), a=document.getElementById('paymentAmount').value.trim(), sd=document.getElementById('paymentStatus');
+        if(!n||!e){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter name/email.'; return; }
+        if(!r){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter reference.'; return; }
+        if(a!=OPAY.amount){ sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Amount must be ₦'+OPAY.amount; return; }
+        if(payments.find(p=>p.reference===r)){ sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Already submitted.'; return; }
+        payments.push({ id:'PAY_'+Date.now(), userId:user.id, userName:n, userEmail:e, reference:r, amount:parseFloat(a), status:'pending', submittedAt:new Date().toISOString() });
+        localStorage.setItem('payment_requests',JSON.stringify(payments));
+        sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Submitted! Verified within 24h.';
+    }
+    
+    function addMsg(t,s){ let d=document.createElement('div'); d.className=`message ${s}-msg`; d.innerHTML=t; document.getElementById('chatMessages').appendChild(d); document.getElementById('aiBody').scrollTop=document.getElementById('aiBody').scrollHeight; }
+    
+    function getAI(q){
+        q=q.toLowerCase();
+        if(q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if(q.includes('vernier')) return `📏 Vernier: Accuracy 0.01cm. Reading = Main Scale + (Vernier × 0.01cm). Example: MS=2.3, VC=4 → 2.34 cm`;
+        if(q.includes('micrometer')) return `📏 Micrometer: Accuracy 0.01mm. Reading = Main Scale + (Circular × 0.01mm). Example: MS=5.5, CS=28 → 5.78 mm`;
+        if(q.includes('pendulum')){ let n=q.match(/\d+/g); if(n&&n.length>=2) return `⏰ T = 2π√(L/g) → g = 4π²L/T² = 4×(3.14)²×${n[0]}/${n[1]}² = ${(4*Math.pow(Math.PI,2)*parseFloat(n[0])/Math.pow(parseFloat(n[1]),2)).toFixed(1)} m/s²`; }
+        if(q.includes('lens')){ let n=q.match(/\d+/g); if(n&&n.length>=2) return `🔍 1/f = 1/u + 1/v = 1/${n[0]} + 1/${n[1]}. f = ${(1/(1/parseFloat(n[0])+1/parseFloat(n[1]))).toFixed(1)} cm`; }
+        if(q.includes('density')) return `🧪 Density experiment: Measure mass (balance), volume via displacement (measuring cylinder). ρ = m/(V₂-V₁).`;
+        if(q.includes('ohm')) return `⚡ Ohm's Law verification: Vary current, measure V & I. Plot V vs I. Straight line through origin confirms V=IR.`;
+        if(q.includes('hello')||q.includes('hi')) return `👋 Hello! Ask me about practical physics!`;
+        return `🤔 Try: "How to read Vernier" or "Pendulum: L=100, T=2" or "Lens: u=30, v=60"`;
+    }
+    
+    function askAI(){ let i=document.getElementById('aiInput'), q=i.value.trim(); if(!q) return; addMsg(q,'user'); i.value=''; if(!premium){ qUsed++; user.questions=qUsed; sessionStorage.setItem('currentUser',JSON.stringify(user)); let us=JSON.parse(localStorage.getItem('physics_users'))||[]; let ui=us.findIndex(u=>u.id===user.id); if(ui!==-1){us[ui].questions=qUsed; localStorage.setItem('physics_users',JSON.stringify(us));} if(qUsed>=MAX) setTimeout(()=>addMsg('⚠️ Free limit! Upgrade ₦1,500 Opay:8052059012','ai'),300); } setTimeout(()=>addMsg(getAI(q),'ai'),500); }
+    function askThis(q){ document.getElementById('aiInput').value=q; askAI(); }
+    function closeAI(){ document.getElementById('aiWidget').style.display='none'; document.getElementById('floatingBtn').style.display='flex'; }
+    function openAI(){ document.getElementById('aiWidget').style.display='block'; document.getElementById('floatingBtn').style.display='none'; }
+    function logout(){ sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    
+    window.askAI=askAI; window.askThis=askThis; window.closeAI=closeAI; window.openAI=openAI;
+    window.openPaymentModal=openPaymentModal; window.closePaymentModal=closePaymentModal;
+    window.submitPaymentRequest=submitPaymentRequest; window.copyAccountNumber=copyAccountNumber; window.logout=logout;
+    updateUI();
+</script>
+</body>
+</html>

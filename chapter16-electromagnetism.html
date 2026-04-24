@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 16: Electromagnetism | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 16: Electromagnetism</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS3 Physics</a> › <strong>Chapter 16: Electromagnetism</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 16: Electromagnetism</h1>
+            <div class="chapter-meta">
+                <span>📙 SS3 First Term</span>
+                <span>⏱️ Reading: 35 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Explain the magnetic effect of electric current</li>
+                <li>Describe electromagnets and their applications</li>
+                <li>State and apply Fleming's Left Hand Rule (motor effect)</li>
+                <li>Explain electromagnetic induction (Faraday's Law)</li>
+                <li>State Lenz's Law</li>
+                <li>Describe generators and transformers</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>16.1 Magnetic Effect of Electric Current</h2>
+            <div class="definition-box">
+                <strong>📌 Oersted's Discovery (1820):</strong> An electric current flowing through a wire produces a magnetic field around it. This is the principle behind electromagnetism.
+            </div>
+            <ul>
+                <li><strong>Straight wire:</strong> Magnetic field forms concentric circles around the wire</li>
+                <li><strong>Right-Hand Grip Rule:</strong> Thumb = current direction, fingers = magnetic field direction</li>
+                <li><strong>Solenoid (coil):</strong> Produces a magnetic field similar to a bar magnet</li>
+            </ul>
+            
+            <h2>16.2 Electromagnets</h2>
+            <div class="definition-box">
+                <strong>📌 Electromagnet:</strong> A temporary magnet produced by passing electric current through a coil (solenoid) wound around a soft iron core.
+            </div>
+            <p><strong>Factors affecting strength of electromagnet:</strong></p>
+            <ul>
+                <li>Number of turns in the coil (more turns = stronger)</li>
+                <li>Current flowing through coil (higher current = stronger)</li>
+                <li>Nature of core material (soft iron is best)</li>
+            </ul>
+            <p><strong>Applications:</strong> Electric bells, relays, loudspeakers, MRI machines, magnetic cranes (lifting scrap metal).</p>
+            
+            <h2>16.3 Force on a Current-Carrying Conductor (Motor Effect)</h2>
+            <div class="definition-box">
+                <strong>📌 Motor Effect:</strong> A current-carrying conductor placed in a magnetic field experiences a force. This is the principle behind electric motors.
+            </div>
+            <div class="formula">F = BIL sin θ</div>
+            <p>Where: F = force (N), B = magnetic flux density (Tesla, T), I = current (A), L = length of conductor (m), θ = angle between current and field</p>
+            
+            <h3>Fleming's Left Hand Rule (Motor Rule)</h3>
+            <div class="key-point">
+                <strong>✋ Fleming's Left Hand Rule:</strong><br>
+                • <strong>ThuMb</strong> = Motion (force direction)<br>
+                • <strong>First Finger</strong> = Field (North to South)<br>
+                • <strong>SeCond Finger</strong> = Current (+ to −)
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A wire of length 0.5 m carries 3 A at 90° to a magnetic field of 0.4 T. Find force.<br>
+                F = 0.4 × 3 × 0.5 × sin(90°) = <strong>0.6 N</strong>
+            </div>
+            
+            <h2>16.4 Electromagnetic Induction</h2>
+            <div class="definition-box">
+                <strong>📌 Electromagnetic Induction:</strong> The production of an EMF (voltage) in a conductor when it is exposed to a changing magnetic field. Discovered by Michael Faraday in 1831.
+            </div>
+            
+            <h3>Faraday's Law</h3>
+            <div class="formula">ε = −N (ΔΦ / Δt)</div>
+            <p>Where: ε = induced EMF (V), N = number of turns, Φ = magnetic flux (Weber, Wb), t = time (s)</p>
+            <p>The induced EMF is proportional to the <strong>rate of change</strong> of magnetic flux.</p>
+            
+            <h3>Lenz's Law</h3>
+            <div class="definition-box">
+                <strong>📌 Lenz's Law:</strong> The direction of the induced current is such that it opposes the change that produced it. This explains the negative sign in Faraday's Law.
+            </div>
+            <ul>
+                <li>Moving a magnet INTO a coil → induced current opposes the motion (repels)</li>
+                <li>Moving a magnet OUT of a coil → induced current opposes the motion (attracts)</li>
+            </ul>
+            
+            <h2>16.5 Applications of Electromagnetic Induction</h2>
+            <table>
+                <tr><th>Device</th><th>Principle</th><th>Function</th></tr>
+                <tr><td><strong>Generator (AC/DC)</strong></td><td>EM induction</td><td>Converts mechanical energy to electrical</td></tr>
+                <tr><td><strong>Transformer</strong></td><td>Mutual induction</td><td>Changes voltage level (step-up/down)</td></tr>
+                <tr><td><strong>Induction Cooker</strong></td><td>Eddy currents</td><td>Heats cookware directly</td></tr>
+                <tr><td><strong>Microphone</strong></td><td>EM induction</td><td>Converts sound to electrical signals</td></tr>
+            </table>
+            
+            <h2>16.6 Transformers</h2>
+            <div class="definition-box">
+                <strong>📌 Transformer:</strong> A device that changes the voltage of an alternating current (AC) using electromagnetic induction.
+            </div>
+            <div class="formula">Vₚ/Vₛ = Nₚ/Nₛ = Iₛ/Iₚ</div>
+            <ul>
+                <li><strong>Step-Up Transformer:</strong> Nₛ > Nₚ → Vₛ > Vₚ (increases voltage)</li>
+                <li><strong>Step-Down Transformer:</strong> Nₛ < Nₚ → Vₛ < Vₚ (decreases voltage)</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A transformer has 500 primary turns and 50 secondary turns. If primary voltage is 240 V, find secondary voltage.<br>
+                Vₛ = Vₚ × (Nₛ/Nₚ) = 240 × (50/500) = <strong>24 V</strong> (step-down)
+            </div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 16 Summary</h3>
+                <ul>
+                    <li><strong>Current → Magnetic Field</strong> (Oersted, Right-Hand Grip Rule)</li>
+                    <li><strong>Electromagnet:</strong> Solenoid + soft iron core</li>
+                    <li><strong>Motor Effect:</strong> F = BIL (Fleming's Left Hand Rule)</li>
+                    <li><strong>Electromagnetic Induction:</strong> Changing magnetic field → EMF (Faraday's Law)</li>
+                    <li><strong>Lenz's Law:</strong> Induced current opposes change</li>
+                    <li><strong>Transformer:</strong> Vₚ/Vₛ = Nₚ/Nₛ</li>
+                </ul>
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter15-current-electricity.html">← Previous: Chapter 15 - Current Electricity</a>
+            <a href="chapter17-optics.html" class="next-chapter">Next: Chapter 17 - Optics →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium access is NOT automatic.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about electromagnetism!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What is Fleming\'s left hand rule?')">✋ Motor Rule</span>
+        <span class="chip" onclick="askThis('Calculate force: B=0.4T, I=3A, L=0.5m')">📐 F=BIL</span>
+        <span class="chip" onclick="askThis('What is Faraday\'s law?')">🧲 Induction</span>
+        <span class="chip" onclick="askThis('Transformer: Np=500, Ns=50, Vp=240V')">🔌 Transformer</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY_ACCOUNT = { bank: "Opay (Paycom)", accountNumber: "8052059012", accountName: "Alade Timothy Olarewaju", amount: 1500 };
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    currentUser.premium = isPremium; currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    function updateUI() { if (isPremium) { document.getElementById('premiumBadge').textContent = '👑 Premium'; document.getElementById('premiumBadge').style.background = '#00a86b'; const pc = document.getElementById('premiumCard'); if (pc) pc.innerHTML = `<h3>👑 Premium</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href='index.html'">📚 Library</button>`; } }
+    function copyAccountNumber() { navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber); alert('✅ Copied'); }
+    function openPaymentModal() { if (isPremium) { alert('Already Premium!'); return; } document.getElementById('payerName').value = currentUser.name || ''; document.getElementById('payerEmail').value = currentUser.email || ''; document.getElementById('paymentModal').style.display = 'flex'; }
+    function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; document.getElementById('paymentStatus').style.display = 'none'; }
+    function submitPaymentRequest() {
+        const n = document.getElementById('payerName').value.trim(), e = document.getElementById('payerEmail').value.trim(), r = document.getElementById('transactionRef').value.trim(), a = document.getElementById('paymentAmount').value.trim(), sd = document.getElementById('paymentStatus');
+        if (!n||!e) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter name/email.'; return; }
+        if (!r) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Enter reference.'; return; }
+        if (a!=OPAY_ACCOUNT.amount) { sd.style.display='block'; sd.className='payment-status status-error'; sd.innerHTML='❌ Amount must be ₦'+OPAY_ACCOUNT.amount; return; }
+        if (paymentRequests.find(p=>p.reference===r)) { sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Already submitted.'; return; }
+        paymentRequests.push({ id:'PAY_'+Date.now(), userId:currentUser.id, userName:n, userEmail:e, reference:r, amount:parseFloat(a), status:'pending', submittedAt:new Date().toISOString() });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        sd.style.display='block'; sd.className='payment-status status-pending'; sd.innerHTML='⏳ Submitted! Verified within 24h.';
+    }
+    
+    function addMessage(t, s) { const d = document.createElement('div'); d.className=`message ${s}-msg`; d.innerHTML=t; document.getElementById('chatMessages').appendChild(d); document.getElementById('aiBody').scrollTop=document.getElementById('aiBody').scrollHeight; }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('fleming')) return `✋ Fleming's Left Hand Rule (Motor): ThuMb=Motion, First Finger=Field, SeCond=Current.`;
+        if (q.includes('f=bil') || (q.includes('force') && q.match(/\d/))) { const n = q.match(/\d+/g); if (n && n.length>=3) return `📐 F = BIL = ${n[0]} × ${n[1]} × ${n[2]} = ${parseFloat(n[0])*parseFloat(n[1])*parseFloat(n[2])} N`; }
+        if (q.includes('faraday')) return `🧲 Faraday's Law: Induced EMF = −N(ΔΦ/Δt). Changing magnetic field produces voltage.`;
+        if (q.includes('lenz')) return `🔄 Lenz's Law: Induced current opposes the change that produced it.`;
+        if (q.includes('transformer')) { const n = q.match(/\d+/g); if (n && n.length>=3) return `🔌 Vₛ = Vₚ×(Nₛ/Nₚ) = ${n[2]}×(${n[1]}/${n[0]}) = ${parseFloat(n[2])*(parseFloat(n[1])/parseFloat(n[0]))} V`; }
+        if (q.includes('electromagnet')) return `🧲 Electromagnet: Solenoid + soft iron core. Strength increases with more turns, higher current.`;
+        if (q.includes('hello')||q.includes('hi')) return `👋 Hello! Ask me about electromagnetism!`;
+        return `🤔 Try: "Fleming's left hand rule" or "Calculate force: B=0.4, I=3, L=0.5" or "Transformer: 500,50,240"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput'), q = input.value.trim(); if (!q) return;
+        addMessage(q, 'user'); input.value = '';
+        if (!isPremium) { sessionQuestions++; currentUser.questions=sessionQuestions; sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); let users=JSON.parse(localStorage.getItem('physics_users'))||[]; const ui=users.findIndex(u=>u.id===currentUser.id); if(ui!==-1){users[ui].questions=sessionQuestions; localStorage.setItem('physics_users',JSON.stringify(users));} if(sessionQuestions>=MAX_FREE) setTimeout(()=>addMessage('⚠️ Free limit! Upgrade ₦1,500 Opay:8052059012','ai'),300); }
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display='none'; document.getElementById('floatingBtn').style.display='flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display='block'; document.getElementById('floatingBtn').style.display='none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href='login.html'; }
+    
+    window.askAI=askAI; window.askThis=askThis; window.closeAI=closeAI; window.openAI=openAI;
+    window.openPaymentModal=openPaymentModal; window.closePaymentModal=closePaymentModal;
+    window.submitPaymentRequest=submitPaymentRequest; window.copyAccountNumber=copyAccountNumber; window.logout=logout;
+    updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 12: Waves | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 12: Waves</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS2 Physics</a> › <strong>Chapter 12: Waves</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 12: Waves</h1>
+            <div class="chapter-meta">
+                <span>📗 SS2 First Term</span>
+                <span>⏱️ Reading: 35 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Define waves and describe their types</li>
+                <li>Distinguish between transverse and longitudinal waves</li>
+                <li>Explain wave properties (wavelength, frequency, amplitude, speed)</li>
+                <li>Apply the wave equation (v = fλ)</li>
+                <li>Describe sound waves and their properties</li>
+                <li>Explain echo, reverberation, and applications of sound</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>12.1 What is a Wave?</h2>
+            <div class="definition-box">
+                <strong>📌 Wave:</strong> A disturbance that transfers energy from one point to another without the permanent transfer of matter.
+            </div>
+            <p>Waves carry <strong>energy</strong>, not matter. The particles of the medium vibrate but do not travel with the wave.</p>
+            
+            <h2>12.2 Types of Waves</h2>
+            <h3>Transverse Waves</h3>
+            <div class="definition-box">
+                <strong>📌 Transverse Wave:</strong> Particles vibrate <strong>perpendicular</strong> (at right angles) to the direction of wave travel.
+            </div>
+            <p><strong>Examples:</strong> Light waves, water ripples, waves on a string, electromagnetic waves.</p>
+            
+            <h3>Longitudinal Waves</h3>
+            <div class="definition-box">
+                <strong>📌 Longitudinal Wave:</strong> Particles vibrate <strong>parallel</strong> (in the same direction) to the direction of wave travel.
+            </div>
+            <p><strong>Examples:</strong> Sound waves, ultrasound, seismic P-waves, slinky spring compression.</p>
+            
+            <table>
+                <tr><th>Property</th><th>Transverse</th><th>Longitudinal</th></tr>
+                <tr><td>Particle Motion</td><td>Perpendicular to wave</td><td>Parallel to wave</td></tr>
+                <tr><td>Medium</td><td>Solids, liquids, vacuum</td><td>All media (not vacuum)</td></tr>
+                <tr><td>Features</td><td>Crests & Troughs</td><td>Compressions & Rarefactions</td></tr>
+                <tr><td>Examples</td><td>Light, water waves</td><td>Sound, ultrasound</td></tr>
+            </table>
+            
+            <h2>12.3 Wave Properties</h2>
+            <table>
+                <tr><th>Property</th><th>Symbol</th><th>Definition</th><th>Unit</th></tr>
+                <tr><td><strong>Wavelength</strong></td><td>λ (lambda)</td><td>Distance between successive crests/troughs</td><td>m</td></tr>
+                <tr><td><strong>Frequency</strong></td><td>f</td><td>Number of waves per second</td><td>Hz (Hertz)</td></tr>
+                <tr><td><strong>Amplitude</strong></td><td>A</td><td>Maximum displacement from rest position</td><td>m</td></tr>
+                <tr><td><strong>Period</strong></td><td>T</td><td>Time for one complete wave</td><td>s</td></tr>
+                <tr><td><strong>Wave Speed</strong></td><td>v</td><td>Distance wave travels per unit time</td><td>m/s</td></tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>📊 Key Relationships:</strong><br>
+                • f = 1/T (Frequency = 1/Period)<br>
+                • T = 1/f (Period = 1/Frequency)
+            </div>
+            
+            <h2>12.4 The Wave Equation</h2>
+            <div class="formula">v = fλ</div>
+            <p>Wave speed = Frequency × Wavelength</p>
+            
+            <div class="example-box">
+                <strong>📐 Example 1:</strong> A wave has frequency 50 Hz and wavelength 2 m. Find speed.<br>
+                v = 50 × 2 = <strong>100 m/s</strong>
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example 2:</strong> Sound travels at 340 m/s with frequency 170 Hz. Find wavelength.<br>
+                λ = v/f = 340/170 = <strong>2 m</strong>
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Example 3:</strong> Radio waves (speed 3×10⁸ m/s) with wavelength 300 m. Find frequency.<br>
+                f = v/λ = 3×10⁸/300 = <strong>1,000,000 Hz (1 MHz)</strong>
+            </div>
+            
+            <h2>12.5 Sound Waves</h2>
+            <div class="definition-box">
+                <strong>📌 Sound:</strong> A longitudinal mechanical wave that travels through a medium (solid, liquid, or gas). Cannot travel through vacuum.
+            </div>
+            
+            <p><strong>Properties of Sound:</strong></p>
+            <ul>
+                <li><strong>Speed in air:</strong> ~340 m/s (at 20°C)</li>
+                <li><strong>Speed in water:</strong> ~1500 m/s</li>
+                <li><strong>Speed in steel:</strong> ~5000 m/s</li>
+                <li><strong>Audible range:</strong> 20 Hz – 20,000 Hz</li>
+            </ul>
+            
+            <table>
+                <tr><th>Property</th><th>Related to</th></tr>
+                <tr><td><strong>Pitch</strong></td><td>Frequency (high f = high pitch)</td></tr>
+                <tr><td><strong>Loudness</strong></td><td>Amplitude (large A = loud)</td></tr>
+                <tr><td><strong>Quality/Timbre</strong></td><td>Waveform (harmonics)</td></tr>
+            </table>
+            
+            <h2>12.6 Echo and Reverberation</h2>
+            <div class="definition-box">
+                <strong>📌 Echo:</strong> Reflection of sound that arrives at the listener after a distinct delay (≥ 0.1 seconds).<br>
+                <strong>📌 Reverberation:</strong> Multiple reflections of sound that blend together (persistence of sound).
+            </div>
+            
+            <div class="example-box">
+                <strong>📐 Echo Example:</strong> Sound reflects off a wall 170 m away. How long for echo?<br>
+                Total distance = 2 × 170 = 340 m<br>
+                Time = 340/340 = <strong>1 second</strong>
+            </div>
+            
+            <h2>12.7 Applications of Sound Waves</h2>
+            <ul>
+                <li><strong>Sonar:</strong> Detecting objects underwater using sound reflection</li>
+                <li><strong>Ultrasound:</strong> Medical imaging (pregnancy scans), cleaning</li>
+                <li><strong>Seismology:</strong> Studying earthquakes using seismic waves</li>
+                <li><strong>Musical instruments:</strong> Producing sound through vibration</li>
+            </ul>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 12 Summary</h3>
+                <ul>
+                    <li><strong>Transverse waves:</strong> Particles vibrate perpendicular (light, water)</li>
+                    <li><strong>Longitudinal waves:</strong> Particles vibrate parallel (sound)</li>
+                    <li><strong>Wave equation:</strong> v = fλ</li>
+                    <li><strong>Frequency & Period:</strong> f = 1/T</li>
+                    <li><strong>Sound:</strong> Longitudinal wave, speed ~340 m/s in air</li>
+                    <li><strong>Echo:</strong> Reflected sound heard after delay</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 WAEC/NECO Tip:</strong> v = fλ calculations, distinguishing transverse/longitudinal waves, and echo problems appear frequently!
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter11-heat.html">← Previous: Chapter 11 - Heat</a>
+            <a href="chapter13-magnetism.html" class="next-chapter">Next: Chapter 13 - Magnetism →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ 500+ Solved Examples</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" id="upgradeBtn" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> <button class="copy-btn" onclick="copyAccountNumber()">Copy</button></p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        <div class="info-note"><strong>📋 Important:</strong> Premium access is NOT automatic. Access granted after verification.</div>
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        <div id="paymentStatus" class="payment-status"></div>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #999;">Premium activates within 24 hours after payment confirmation.</p>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header"><span>🤖 Physics AI</span><span onclick="closeAI()">✕</span></div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about waves!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What is the wave equation?')">🌊 v = fλ</span>
+        <span class="chip" onclick="askThis('Calculate speed: f=50Hz, λ=2m')">🔢 Speed</span>
+        <span class="chip" onclick="askThis('Difference between transverse and longitudinal waves')">📊 Types</span>
+        <span class="chip" onclick="askThis('What is echo?')">🔊 Echo</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer><p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p></footer>
+
+<script>
+    const OPAY_ACCOUNT = { bank: "Opay (Paycom)", accountNumber: "8052059012", accountName: "Alade Timothy Olarewaju", amount: 1500 };
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    currentUser.premium = isPremium; currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    function updateUI() {
+        if (isPremium) {
+            document.getElementById('premiumBadge').textContent = '👑 Premium Active';
+            document.getElementById('premiumBadge').style.background = '#00a86b';
+            const pc = document.getElementById('premiumCard');
+            if (pc) pc.innerHTML = `<h3 style="color:#0f3460;">👑 Premium Active</h3><p>✅ Full access!</p><button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>`;
+        }
+    }
+    
+    function copyAccountNumber() { navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber); alert('✅ Copied: ' + OPAY_ACCOUNT.accountNumber); }
+    function openPaymentModal() { if (isPremium) { alert('Already Premium!'); return; } document.getElementById('payerName').value = currentUser.name || ''; document.getElementById('payerEmail').value = currentUser.email || ''; document.getElementById('paymentModal').style.display = 'flex'; }
+    function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; document.getElementById('paymentStatus').style.display = 'none'; }
+    
+    function submitPaymentRequest() {
+        const name = document.getElementById('payerName').value.trim();
+        const email = document.getElementById('payerEmail').value.trim();
+        const ref = document.getElementById('transactionRef').value.trim();
+        const amount = document.getElementById('paymentAmount').value.trim();
+        const sd = document.getElementById('paymentStatus');
+        if (!name || !email) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = '❌ Enter name and email.'; return; }
+        if (!ref) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = '❌ Enter reference.'; return; }
+        if (amount != OPAY_ACCOUNT.amount) { sd.style.display = 'block'; sd.className = 'payment-status status-error'; sd.innerHTML = `❌ Amount must be ₦${OPAY_ACCOUNT.amount}.`; return; }
+        if (paymentRequests.find(r => r.reference === ref)) { sd.style.display = 'block'; sd.className = 'payment-status status-pending'; sd.innerHTML = '⏳ Reference already submitted.'; return; }
+        paymentRequests.push({ id: 'PAY_' + Date.now(), userId: currentUser.id, userName: name, userEmail: email, reference: ref, amount: parseFloat(amount), status: 'pending', submittedAt: new Date().toISOString() });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        sd.style.display = 'block'; sd.className = 'payment-status status-pending';
+        sd.innerHTML = `⏳ Payment submitted! Reference: ${ref}. Access after verification.`;
+    }
+    
+    function addMessage(text, sender) {
+        const div = document.createElement('div'); div.className = `message ${sender}-msg`; div.innerHTML = text;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('aiBody').scrollTop = document.getElementById('aiBody').scrollHeight;
+    }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('wave equation')) return `🌊 Wave equation: v = fλ (speed = frequency × wavelength)`;
+        if (q.includes('speed') && q.match(/\d/)) {
+            const nums = q.match(/\d+/g);
+            if (nums && nums.length >= 2) return `🔢 v = fλ = ${nums[0]} × ${nums[1]} = ${parseFloat(nums[0])*parseFloat(nums[1])} m/s`;
+        }
+        if (q.includes('transverse') && q.includes('longitudinal')) return `📊 Transverse: particles perpendicular (light). Longitudinal: particles parallel (sound).`;
+        if (q.includes('echo')) return `🔊 Echo = reflected sound heard after ≥ 0.1s delay. 2d = v × t.`;
+        if (q.includes('frequency') && q.includes('period')) return `📐 f = 1/T. Period and frequency are reciprocals.`;
+        if (q.includes('hello') || q.includes('hi')) return `👋 Hello ${currentUser.name.split(' ')[0]}! Ask me about waves!`;
+        return `🤔 Try: "Wave equation" or "Calculate speed: f=50, λ=2" or "Transverse vs longitudinal"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput'); const q = input.value.trim(); if (!q) return;
+        addMessage(q, 'user'); input.value = '';
+        if (!isPremium) {
+            sessionQuestions++; currentUser.questions = sessionQuestions;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const ui = users.findIndex(u => u.id === currentUser.id);
+            if (ui !== -1) { users[ui].questions = sessionQuestions; localStorage.setItem('physics_users', JSON.stringify(users)); }
+            if (sessionQuestions >= MAX_FREE) setTimeout(() => addMessage('⚠️ Free limit reached! Upgrade (₦1,500) Opay: 8052059012', 'ai'), 300);
+        }
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display = 'none'; document.getElementById('floatingBtn').style.display = 'flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display = 'block'; document.getElementById('floatingBtn').style.display = 'none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    window.askAI = askAI; window.askThis = askThis; window.closeAI = closeAI; window.openAI = openAI;
+    window.openPaymentModal = openPaymentModal; window.closePaymentModal = closePaymentModal;
+    window.submitPaymentRequest = submitPaymentRequest; window.copyAccountNumber = copyAccountNumber; window.logout = logout;
+    updateUI();
+</script>
+</body>
+</html>

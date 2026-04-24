@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Simple Machines | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; font-weight: 600; }
+        .logo span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links .premium-badge { background: #ffd700; color: #0f3460; padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .breadcrumb { max-width: 1200px; margin: 1rem auto 0; padding: 0 2rem; color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #0f3460; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .reading-pane { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-header { margin-bottom: 2rem; border-bottom: 2px solid #0f3460; padding-bottom: 1.5rem; }
+        .chapter-header h1 { color: #0f3460; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .chapter-meta { color: #666; font-size: 0.95rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+        .learning-objectives { background: #e8f4f8; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid #00d2ff; }
+        .learning-objectives h3 { color: #0f3460; margin-bottom: 0.8rem; }
+        .chapter-content h2 { color: #0f3460; margin: 2.5rem 0 1rem; border-left: 4px solid #00d2ff; padding-left: 1rem; font-size: 1.6rem; }
+        .chapter-content h3 { color: #16213e; margin: 1.8rem 0 1rem; font-size: 1.3rem; }
+        .definition-box { background: #f0f7ff; border: 1px solid #b8d4f0; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .definition-box strong { color: #0f3460; }
+        .example-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 10px 10px 0; }
+        .formula { background: #1a1a2e; color: #00d2ff; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+        th { background: #0f3460; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .key-point { background: #fff3cd; border: 1px solid #ffca2c; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+        .premium-sidebar { position: sticky; top: 2rem; height: fit-content; }
+        .premium-card { background: linear-gradient(145deg, #ffffff, #f0f4f8); border-radius: 20px; padding: 2rem 1.5rem; border: 1px solid #00d2ff; }
+        .price-naira { font-size: 2.5rem; font-weight: 800; color: #0f3460; margin: 1rem 0; }
+        .btn-premium { background: linear-gradient(135deg, #ffd700, #ffb347); color: #0f3460; border: none; padding: 1rem; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        .btn-outline { background: transparent; border: 2px solid #0f3460; color: #0f3460; padding: 0.8rem; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #ddd; }
+        .chapter-nav a { color: #0f3460; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; }
+        .chapter-nav a:hover { background: #e8f4f8; }
+        .chapter-nav .next-chapter { background: #0f3460; color: white; padding: 0.8rem 1.5rem; border-radius: 30px; }
+
+        /* Payment Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 450px; text-align: center; }
+        .modal-content h3 { color: #0f3460; margin-bottom: 20px; }
+        .modal-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content .account-details { background: #e8f4f8; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; }
+        .modal-content .account-details p { margin: 5px 0; }
+        .copy-btn { background: #0f3460; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .close-modal { background: #ddd; color: #333; padding: 12px; border: none; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .payment-status { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .info-note { background: #e8f4f8; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 13px; }
+
+        /* AI Widget */
+        .ai-widget { position: fixed; bottom: 20px; right: 20px; width: 380px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); z-index: 1000; border: 2px solid #0f3460; }
+        .ai-header { background: #0f3460; color: white; padding: 15px; border-radius: 18px 18px 0 0; display: flex; justify-content: space-between; }
+        .ai-header span { cursor: pointer; font-size: 20px; }
+        .ai-body { padding: 15px; height: 300px; overflow-y: auto; background: #f8f9fa; }
+        .message { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 85%; }
+        .user-msg { background: #0f3460; color: white; margin-left: auto; }
+        .ai-msg { background: #e3f2fd; }
+        .ai-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: white; }
+        .ai-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 30px; }
+        .ai-input button { background: #0f3460; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-left: 8px; cursor: pointer; }
+        .chips { display: flex; gap: 8px; padding: 0 15px 10px; flex-wrap: wrap; }
+        .chip { background: white; border: 1px solid #0f3460; color: #0f3460; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .chip:hover { background: #0f3460; color: white; }
+        .floating-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0f3460; color: white; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 28px; cursor: pointer; z-index: 999; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .ai-widget { width: 95%; right: 2.5%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span>Chapter 7: Simple Machines</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="#" class="premium-badge" id="premiumBadge">✨ Go Premium ₦1,500</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="index.html">Library</a> › <a href="index.html">SS1 Physics</a> › <strong>Chapter 7: Simple Machines</strong>
+</div>
+
+<div class="container">
+    <main class="reading-pane">
+        <div class="chapter-header">
+            <h1>Chapter 7: Simple Machines</h1>
+            <div class="chapter-meta">
+                <span>📘 SS1 First Term</span>
+                <span>⏱️ Reading: 35 mins</span>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <ul>
+                <li>Define simple machines and their importance</li>
+                <li>Identify the six types of simple machines</li>
+                <li>Define and calculate Mechanical Advantage (MA)</li>
+                <li>Define and calculate Velocity Ratio (VR)</li>
+                <li>Define and calculate Efficiency</li>
+                <li>Solve problems involving simple machines</li>
+            </ul>
+        </div>
+        
+        <article class="chapter-content">
+            <h2>7.1 What are Simple Machines?</h2>
+            <div class="definition-box">
+                <strong>📌 Simple Machine:</strong> A basic mechanical device that changes the direction or magnitude of a force to make work easier.
+            </div>
+            <p>Simple machines help us by:</p>
+            <ul>
+                <li><strong>Multiplying force</strong> (e.g., lever, pulley)</li>
+                <li><strong>Changing direction of force</strong> (e.g., pulley)</li>
+                <li><strong>Increasing speed or distance</strong> (e.g., gears)</li>
+            </ul>
+            
+            <h2>7.2 The Six Types of Simple Machines</h2>
+            <table>
+                <tr><th>Machine</th><th>Description</th><th>Examples</th></tr>
+                <tr><td><strong>Lever</strong></td><td>Rigid bar pivoted at a fulcrum</td><td>Seesaw, crowbar, scissors</td></tr>
+                <tr><td><strong>Pulley</strong></td><td>Wheel with rope/chain</td><td>Flagpole, crane, blinds</td></tr>
+                <tr><td><strong>Inclined Plane</strong></td><td>Sloping surface</td><td>Ramp, slide, staircase</td></tr>
+                <tr><td><strong>Wedge</strong></td><td>Two inclined planes back-to-back</td><td>Knife, axe, chisel, nail</td></tr>
+                <tr><td><strong>Screw</strong></td><td>Inclined plane wrapped around cylinder</td><td>Screw, bolt, jar lid, drill</td></tr>
+                <tr><td><strong>Wheel and Axle</strong></td><td>Wheel attached to smaller axle</td><td>Doorknob, steering wheel, bicycle</td></tr>
+            </table>
+            
+            <h2>7.3 Classes of Levers</h2>
+            <table>
+                <tr><th>Class</th><th>Arrangement (F-L-E)</th><th>Examples</th><th>MA</th></tr>
+                <tr><td><strong>First Class</strong></td><td>Fulcrum between Load & Effort</td><td>Seesaw, scissors, crowbar</td><td>MA > 1 or < 1</td></tr>
+                <tr><td><strong>Second Class</strong></td><td>Load between Fulcrum & Effort</td><td>Wheelbarrow, nutcracker, bottle opener</td><td>MA > 1</td></tr>
+                <tr><td><strong>Third Class</strong></td><td>Effort between Fulcrum & Load</td><td>Tweezers, fishing rod, human arm</td><td>MA < 1</td></tr>
+            </table>
+            <div class="key-point"><strong>💡 Memory Trick:</strong> F-L-E = Fulcrum, Load, Effort positions</div>
+            
+            <h2>7.4 Key Terms in Simple Machines</h2>
+            
+            <h3>Mechanical Advantage (MA)</h3>
+            <div class="definition-box">
+                <strong>📌 Mechanical Advantage:</strong> The ratio of Load (output force) to Effort (input force).<br>
+                <strong>It has NO UNITS</strong> (dimensionless).
+            </div>
+            <div class="formula">MA = Load / Effort</div>
+            <div class="example-box">
+                <strong>📐 Example:</strong> A lever lifts a 500 N load with 100 N effort. Find MA.<br>
+                MA = 500 / 100 = <strong>5</strong> (The machine multiplies force by 5)
+            </div>
+            
+            <h3>Velocity Ratio (VR)</h3>
+            <div class="definition-box">
+                <strong>📌 Velocity Ratio:</strong> The ratio of distance moved by Effort to distance moved by Load.<br>
+                <strong>It has NO UNITS</strong> (dimensionless).
+            </div>
+            <div class="formula">VR = Distance moved by Effort / Distance moved by Load</div>
+            <div class="example-box">
+                <strong>📐 Example:</strong> Effort moves 50 cm, Load moves 10 cm. Find VR.<br>
+                VR = 50 / 10 = <strong>5</strong>
+            </div>
+            
+            <h3>Efficiency (η)</h3>
+            <div class="definition-box">
+                <strong>📌 Efficiency:</strong> The ratio of useful work output to total work input, expressed as a percentage.
+            </div>
+            <div class="formula">Efficiency = (MA / VR) × 100%</div>
+            <div class="formula">Efficiency = (Work Output / Work Input) × 100%</div>
+            <div class="example-box">
+                <strong>📐 Example:</strong> A machine has MA = 4 and VR = 5. Find efficiency.<br>
+                Efficiency = (4 / 5) × 100% = <strong>80%</strong>
+            </div>
+            
+            <div class="key-point">
+                <strong>📊 Important Relationships:</strong><br>
+                • For ideal machine (no friction): MA = VR, Efficiency = 100%<br>
+                • For real machines: MA < VR, Efficiency < 100% (due to friction)<br>
+                • Work Output = Work Input × Efficiency
+            </div>
+            
+            <h2>7.5 Formulas for Specific Machines</h2>
+            <table>
+                <tr><th>Machine</th><th>VR Formula</th></tr>
+                <tr><td><strong>Lever</strong></td><td>VR = Effort Arm / Load Arm</td></tr>
+                <tr><td><strong>Pulley System</strong></td><td>VR = Number of rope segments supporting load</td></tr>
+                <tr><td><strong>Inclined Plane</strong></td><td>VR = Length of plane / Height of plane</td></tr>
+                <tr><td><strong>Wedge</strong></td><td>VR = Length / Thickness</td></tr>
+                <tr><td><strong>Screw</strong></td><td>VR = 2πR / Pitch</td></tr>
+                <tr><td><strong>Wheel and Axle</strong></td><td>VR = Radius of Wheel / Radius of Axle</td></tr>
+                <tr><td><strong>Gears</strong></td><td>VR = Number of teeth on driven gear / Number of teeth on driver gear</td></tr>
+            </table>
+            
+            <h2>7.6 Work and Simple Machines</h2>
+            <div class="definition-box">
+                <strong>📌 Work:</strong> Force × distance moved in the direction of force.<br>
+                Work Input = Effort × Effort Distance<br>
+                Work Output = Load × Load Distance
+            </div>
+            <p><strong>Law of Conservation of Energy:</strong> A machine cannot create energy. Work output is always less than work input due to friction.</p>
+            
+            <div class="example-box">
+                <strong>📐 Example:</strong> A pulley lifts 200 N load by 2 m using 50 N effort moving 10 m. Find work input, work output, and efficiency.<br><br>
+                Work Output = 200 × 2 = <strong>400 J</strong><br>
+                Work Input = 50 × 10 = <strong>500 J</strong><br>
+                Efficiency = (400/500) × 100% = <strong>80%</strong>
+            </div>
+            
+            <div style="background:#e8f4f8; padding:1.5rem; border-radius:12px; margin-top:2rem;">
+                <h3 style="color:#0f3460;">📝 Chapter 7 Summary</h3>
+                <ul>
+                    <li><strong>Simple Machines:</strong> Lever, Pulley, Inclined Plane, Wedge, Screw, Wheel & Axle</li>
+                    <li><strong>MA = Load / Effort</strong> (force multiplication)</li>
+                    <li><strong>VR = Effort distance / Load distance</strong></li>
+                    <li><strong>Efficiency = (MA/VR) × 100%</strong></li>
+                    <li>Ideal machine: MA = VR, Efficiency = 100%</li>
+                    <li>Real machine: MA < VR, Efficiency < 100% (due to friction)</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 WAEC/NECO Tip:</strong> MA, VR, and Efficiency calculations appear frequently! Remember the formulas and relationships.
+            </div>
+        </article>
+        
+        <div class="chapter-nav">
+            <a href="chapter6-matter.html">← Previous: Chapter 6 - Matter</a>
+            <a href="chapter8-newtons-laws.html" class="next-chapter">Next: Chapter 8 - Newton's Laws →</a>
+        </div>
+    </main>
+    
+    <aside class="premium-sidebar">
+        <div class="premium-card" id="premiumCard">
+            <h3 style="color:#0f3460; margin-bottom:1rem;">👑 PhysicsMaster Premium</h3>
+            <div class="price-naira">₦1,500 <small>one-time</small></div>
+            <ul style="margin:1rem 0 1.5rem 1.5rem;">
+                <li>✓ All 20 Chapters</li>
+                <li>✓ Unlimited AI Tutor</li>
+                <li>✓ 500+ Solved Examples</li>
+                <li>✓ WAEC/NECO Prep</li>
+            </ul>
+            <button class="btn-premium" id="upgradeBtn" onclick="openPaymentModal()">💳 Pay with Opay</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="paymentModal">
+    <div class="modal-content">
+        <h3>🟢 Opay Bank Transfer</h3>
+        <p>Amount: <strong>₦1,500</strong></p>
+        
+        <div class="account-details">
+            <p><strong>🏦 Bank:</strong> Opay (Paycom)</p>
+            <p><strong>📱 Account Number:</strong> <span id="accountNumber">8052059012</span> 
+                <button class="copy-btn" onclick="copyAccountNumber()">Copy</button>
+            </p>
+            <p><strong>👤 Account Name:</strong> Alade Timothy Olarewaju</p>
+        </div>
+        
+        <div class="info-note">
+            <strong>📋 Important:</strong> Premium access is <strong>NOT automatic</strong>. After payment, submit your details. Access will be granted after we verify the payment.
+        </div>
+        
+        <input type="text" id="payerName" placeholder="Your Full Name">
+        <input type="email" id="payerEmail" placeholder="Your Email">
+        <input type="text" id="transactionRef" placeholder="Opay Transaction Reference">
+        <input type="text" id="paymentAmount" placeholder="Amount Paid (₦)" value="1500">
+        
+        <button class="btn-premium" onclick="submitPaymentRequest()">📤 Submit for Verification</button>
+        
+        <div id="paymentStatus" class="payment-status"></div>
+        
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #999;">Premium activates within 24 hours after payment confirmation.</p>
+    </div>
+</div>
+
+<!-- AI Widget -->
+<div class="ai-widget" id="aiWidget">
+    <div class="ai-header">
+        <span>🤖 Physics AI</span>
+        <span onclick="closeAI()">✕</span>
+    </div>
+    <div class="ai-body" id="aiBody">
+        <div class="message ai-msg"><strong>👋 Hello!</strong> Ask me about simple machines!</div>
+        <div id="chatMessages"></div>
+    </div>
+    <div class="chips">
+        <span class="chip" onclick="askThis('What are the 6 simple machines?')">🔧 6 Machines</span>
+        <span class="chip" onclick="askThis('How to calculate Mechanical Advantage?')">📊 MA</span>
+        <span class="chip" onclick="askThis('Calculate efficiency: MA=4, VR=5')">⚡ Efficiency</span>
+        <span class="chip" onclick="askThis('Classes of levers')">🔨 Levers</span>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') askAI()">
+        <button onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<div class="floating-btn" id="floatingBtn" onclick="openAI()">💬</div>
+
+<footer>
+    <p>© 2024 PhysicsMaster.ng • Premium Requires Payment Verification</p>
+</footer>
+
+<script>
+    // OPAY ACCOUNT DETAILS
+    const OPAY_ACCOUNT = {
+        bank: "Opay (Paycom)",
+        accountNumber: "8052059012",
+        accountName: "Alade Timothy Olarewaju",
+        amount: 1500
+    };
+    
+    let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+    
+    // AUTHENTICATION
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'login.html';
+    
+    let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+    let userData = users.find(u => u.id === currentUser.id);
+    if (!userData) { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    let isPremium = userData.premium || false;
+    let sessionQuestions = userData.questions || 0;
+    const MAX_FREE = 10;
+    
+    currentUser.premium = isPremium;
+    currentUser.questions = sessionQuestions;
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // UI UPDATES
+    function updateUI() {
+        if (isPremium) {
+            document.getElementById('premiumBadge').textContent = '👑 Premium Active';
+            document.getElementById('premiumBadge').style.background = '#00a86b';
+            const premiumCard = document.getElementById('premiumCard');
+            if (premiumCard) {
+                premiumCard.innerHTML = `
+                    <h3 style="color:#0f3460; margin-bottom:1rem;">👑 Premium Active</h3>
+                    <p style="margin-bottom:1rem;">✅ You have full access to all chapters and unlimited AI!</p>
+                    <button class="btn-outline" onclick="window.location.href='index.html'">📚 Back to Library</button>
+                `;
+            }
+        }
+    }
+    
+    // PAYMENT FUNCTIONS
+    function copyAccountNumber() {
+        navigator.clipboard.writeText(OPAY_ACCOUNT.accountNumber);
+        alert('✅ Account number copied: ' + OPAY_ACCOUNT.accountNumber);
+    }
+    
+    function openPaymentModal() {
+        if (isPremium) { alert('You are already a Premium member!'); return; }
+        document.getElementById('payerName').value = currentUser.name || '';
+        document.getElementById('payerEmail').value = currentUser.email || '';
+        document.getElementById('paymentModal').style.display = 'flex';
+    }
+    
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        document.getElementById('paymentStatus').style.display = 'none';
+    }
+    
+    function submitPaymentRequest() {
+        const name = document.getElementById('payerName').value.trim();
+        const email = document.getElementById('payerEmail').value.trim();
+        const ref = document.getElementById('transactionRef').value.trim();
+        const amount = document.getElementById('paymentAmount').value.trim();
+        const statusDiv = document.getElementById('paymentStatus');
+        
+        if (!name || !email) {
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'payment-status status-error';
+            statusDiv.innerHTML = '❌ Please enter your name and email.';
+            return;
+        }
+        if (!ref) {
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'payment-status status-error';
+            statusDiv.innerHTML = '❌ Please enter the Opay transaction reference.';
+            return;
+        }
+        if (amount != OPAY_ACCOUNT.amount) {
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'payment-status status-error';
+            statusDiv.innerHTML = `❌ Payment amount must be exactly ₦${OPAY_ACCOUNT.amount}.`;
+            return;
+        }
+        
+        const existingRequest = paymentRequests.find(r => r.reference === ref);
+        if (existingRequest) {
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'payment-status status-pending';
+            statusDiv.innerHTML = '⏳ This payment reference has already been submitted.';
+            return;
+        }
+        
+        paymentRequests.push({
+            id: 'PAY_' + Date.now(),
+            userId: currentUser.id,
+            userName: name,
+            userEmail: email,
+            reference: ref,
+            amount: parseFloat(amount),
+            status: 'pending',
+            submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem('payment_requests', JSON.stringify(paymentRequests));
+        
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'payment-status status-pending';
+        statusDiv.innerHTML = `⏳ Payment submitted! Reference: ${ref}. Access will be activated after verification.`;
+    }
+    
+    // AI FUNCTIONS
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = `message ${sender}-msg`;
+        div.innerHTML = text;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('aiBody').scrollTop = document.getElementById('aiBody').scrollHeight;
+    }
+    
+    function getAIResponse(q) {
+        q = q.toLowerCase();
+        if (q.includes('time')) return `🕐 ${new Date().toLocaleTimeString()}`;
+        if (q.includes('6 simple machines')) return `🔧 6 Simple Machines: Lever, Pulley, Inclined Plane, Wedge, Screw, Wheel & Axle`;
+        if (q.includes('mechanical advantage')) return `📊 MA = Load / Effort. No units.`;
+        if (q.includes('velocity ratio')) return `📐 VR = Effort distance / Load distance. No units.`;
+        if (q.includes('efficiency')) {
+            const nums = q.match(/(\d+)/g);
+            if (nums && nums.length >= 2) return `⚡ Efficiency = (MA/VR) × 100% = (${nums[0]}/${nums[1]}) × 100% = ${(nums[0]/nums[1]*100).toFixed(1)}%`;
+            return `⚡ Efficiency = (MA/VR) × 100% = (Work Output / Work Input) × 100%`;
+        }
+        if (q.includes('classes of levers')) return `🔨 Levers: 1st Class (F-L-E), 2nd Class (L-F-E), 3rd Class (F-E-L)`;
+        if (q.includes('hello') || q.includes('hi')) return `👋 Hello ${currentUser.name.split(' ')[0]}! Ask me about simple machines!`;
+        return `🤔 Try: "6 simple machines" or "Calculate efficiency: MA=4, VR=5" or "Classes of levers"`;
+    }
+    
+    function askAI() {
+        const input = document.getElementById('aiInput');
+        const q = input.value.trim();
+        if (!q) return;
+        addMessage(q, 'user');
+        input.value = '';
+        
+        if (!isPremium) {
+            sessionQuestions++;
+            currentUser.questions = sessionQuestions;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) { users[userIndex].questions = sessionQuestions; localStorage.setItem('physics_users', JSON.stringify(users)); }
+            if (sessionQuestions >= MAX_FREE) setTimeout(() => addMessage('⚠️ Free limit reached! Upgrade (₦1,500) Opay: 8052059012', 'ai'), 300);
+        }
+        
+        setTimeout(() => addMessage(getAIResponse(q), 'ai'), 500);
+    }
+    
+    function askThis(q) { document.getElementById('aiInput').value = q; askAI(); }
+    function closeAI() { document.getElementById('aiWidget').style.display = 'none'; document.getElementById('floatingBtn').style.display = 'flex'; }
+    function openAI() { document.getElementById('aiWidget').style.display = 'block'; document.getElementById('floatingBtn').style.display = 'none'; }
+    function logout() { sessionStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+    
+    window.askAI = askAI;
+    window.askThis = askThis;
+    window.closeAI = closeAI;
+    window.openAI = openAI;
+    window.openPaymentModal = openPaymentModal;
+    window.closePaymentModal = closePaymentModal;
+    window.submitPaymentRequest = submitPaymentRequest;
+    window.copyAccountNumber = copyAccountNumber;
+    window.logout = logout;
+    
+    updateUI();
+</script>
+</body>
+</html>

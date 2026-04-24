@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; padding: 2rem; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: #0f3460; margin-bottom: 1rem; border-bottom: 2px solid #0f3460; padding-bottom: 0.5rem; }
+        h2 { color: #0f3460; margin: 2rem 0 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #0f3460; }
+        .stat-label { color: #666; margin-top: 0.5rem; }
+        .login-box { background: white; border-radius: 16px; padding: 2rem; max-width: 400px; margin: 100px auto; text-align: center; }
+        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; }
+        .login-box button { width: 100%; padding: 12px; background: #0f3460; color: white; border: none; border-radius: 10px; cursor: pointer; }
+        .hidden { display: none !important; }
+        table { width: 100%; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        th { background: #0f3460; color: white; padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid #e0e0e0; }
+        tr:last-child td { border-bottom: none; }
+        .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-right: 5px; }
+        .btn-approve { background: #00a86b; color: white; }
+        .btn-reject { background: #dc3545; color: white; }
+        .btn-delete { background: #6c757d; color: white; }
+        .btn-logout { background: #dc3545; color: white; padding: 0.5rem 1.5rem; border-radius: 5px; text-decoration: none; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .tab { padding: 0.5rem 1.5rem; background: #e0e0e0; border: none; border-radius: 30px; cursor: pointer; }
+        .tab.active { background: #0f3460; color: white; }
+        .refresh-btn { background: #0f3460; color: white; padding: 0.5rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2 style="color:#0f3460; margin-bottom:1.5rem;">🔐 Admin Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter Admin Password" onkeypress="if(event.key==='Enter') login()">
+            <button onclick="login()">Login</button>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: #999;">Default password: admin123</p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden">
+        <div class="container">
+            <div class="navbar">
+                <h1>⚡ PhysicsMaster Admin Panel</h1>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="refresh-btn" onclick="loadAllData()">🔄 Refresh</button>
+                    <a href="#" class="btn-logout" onclick="logout()">🚪 Logout</a>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="premiumUsers">0</div>
+                    <div class="stat-label">Premium Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingPayments">0</div>
+                    <div class="stat-label">Pending Payments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRevenue">₦0</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('pending')">⏳ Pending Payments</button>
+                <button class="tab" onclick="switchTab('approved')">✅ Approved Payments</button>
+                <button class="tab" onclick="switchTab('users')">👥 All Users</button>
+            </div>
+            
+            <div id="pendingTab">
+                <h2>⏳ Pending Payment Requests</h2>
+                <table id="pendingTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Reference</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingTableBody"></tbody>
+                </table>
+            </div>
+            
+            <div id="approvedTab" class="hidden">
+                <h2>✅ Approved Payments</h2>
+                <table id="approvedTable">
+                    <thead>
+                        <tr>
+                            <th>Verified Date</th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Reference</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvedTableBody"></tbody>
+                </table>
+            </div>
+            
+            <div id="usersTab" class="hidden">
+                <h2>👥 Registered Users</h2>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Joined</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Questions Used</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin password (change this to your own secure password)
+        const ADMIN_PASSWORD = 'Timo0804';
+        let isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+        
+        // Check login status on load
+        if (isLoggedIn) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            loadAllData();
+        }
+        
+        function login() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadAllData();
+            } else {
+                alert('Invalid password!');
+            }
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+        
+        function loadAllData() {
+            loadPendingPayments();
+            loadApprovedPayments();
+            loadUsers();
+            updateStats();
+        }
+        
+        function updateStats() {
+            const users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            
+            const premiumCount = users.filter(u => u.premium).length;
+            const pendingCount = payments.filter(p => p.status === 'pending').length;
+            const totalRevenue = payments.filter(p => p.status === 'approved').reduce((sum, p) => sum + (p.amount || 1500), 0);
+            
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('premiumUsers').textContent = premiumCount;
+            document.getElementById('pendingPayments').textContent = pendingCount;
+            document.getElementById('totalRevenue').textContent = '₦' + totalRevenue.toLocaleString();
+        }
+        
+        function loadPendingPayments() {
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            const pending = payments.filter(p => p.status === 'pending').sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            
+            const tbody = document.getElementById('pendingTableBody');
+            if (pending.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem;">No pending payments</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = pending.map(p => `
+                <tr>
+                    <td>${new Date(p.submittedAt).toLocaleDateString()}</td>
+                    <td><strong>${p.userName}</strong></td>
+                    <td>${p.userEmail}</td>
+                    <td><code>${p.reference}</code></td>
+                    <td>₦${p.amount}</td>
+                    <td>
+                        <button class="btn btn-approve" onclick="approvePayment('${p.id}')">✅ Approve</button>
+                        <button class="btn btn-reject" onclick="rejectPayment('${p.id}')">❌ Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function loadApprovedPayments() {
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            const approved = payments.filter(p => p.status === 'approved').sort((a, b) => new Date(b.verifiedAt) - new Date(a.verifiedAt));
+            
+            const tbody = document.getElementById('approvedTableBody');
+            if (approved.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem;">No approved payments</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = approved.map(p => `
+                <tr>
+                    <td>${new Date(p.verifiedAt).toLocaleDateString()}</td>
+                    <td><strong>${p.userName}</strong></td>
+                    <td>${p.userEmail}</td>
+                    <td><code>${p.reference}</code></td>
+                    <td>₦${p.amount}</td>
+                    <td>
+                        <button class="btn btn-delete" onclick="deletePayment('${p.id}')">🗑️ Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const sortedUsers = users.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+            
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = sortedUsers.map(u => `
+                <tr>
+                    <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'}</td>
+                    <td><strong>${u.name}</strong></td>
+                    <td>${u.email}</td>
+                    <td><span class="status-badge ${u.premium ? 'status-approved' : 'status-pending'}">${u.premium ? 'Premium' : 'Free'}</span></td>
+                    <td>${u.questions || 0} / 10</td>
+                    <td>
+                        ${!u.premium ? `<button class="btn btn-approve" onclick="manuallyActivatePremium('${u.id}')">⭐ Make Premium</button>` : ''}
+                        <button class="btn btn-reject" onclick="resetUserQuestions('${u.id}')">🔄 Reset Questions</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // ========== PAYMENT ACTIONS ==========
+        function approvePayment(paymentId) {
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            const paymentIndex = payments.findIndex(p => p.id === paymentId);
+            
+            if (paymentIndex === -1) return;
+            
+            const payment = payments[paymentIndex];
+            
+            if (confirm(`Approve payment from ${payment.userName} (${payment.userEmail}) for ₦${payment.amount}?`)) {
+                // Update payment status
+                payments[paymentIndex].status = 'approved';
+                payments[paymentIndex].verifiedAt = new Date().toISOString();
+                localStorage.setItem('payment_requests', JSON.stringify(payments));
+                
+                // Activate premium for user
+                const users = JSON.parse(localStorage.getItem('physics_users')) || [];
+                const userIndex = users.findIndex(u => u.id === payment.userId);
+                
+                if (userIndex !== -1) {
+                    users[userIndex].premium = true;
+                    users[userIndex].paymentRef = payment.reference;
+                    localStorage.setItem('physics_users', JSON.stringify(users));
+                    alert(`✅ Payment approved! ${payment.userName} is now Premium!`);
+                } else {
+                    alert('⚠️ Payment approved but user not found in database.');
+                }
+                
+                loadAllData();
+            }
+        }
+        
+        function rejectPayment(paymentId) {
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            const paymentIndex = payments.findIndex(p => p.id === paymentId);
+            
+            if (paymentIndex === -1) return;
+            
+            if (confirm(`Reject payment from ${payments[paymentIndex].userName}?`)) {
+                payments.splice(paymentIndex, 1);
+                localStorage.setItem('payment_requests', JSON.stringify(payments));
+                alert('Payment rejected and removed.');
+                loadAllData();
+            }
+        }
+        
+        function deletePayment(paymentId) {
+            const payments = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            const paymentIndex = payments.findIndex(p => p.id === paymentId);
+            
+            if (paymentIndex === -1) return;
+            
+            if (confirm('Delete this payment record?')) {
+                payments.splice(paymentIndex, 1);
+                localStorage.setItem('payment_requests', JSON.stringify(payments));
+                loadAllData();
+            }
+        }
+        
+        function manuallyActivatePremium(userId) {
+            const users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const userIndex = users.findIndex(u => u.id === userId);
+            
+            if (userIndex === -1) return;
+            
+            if (confirm(`Manually activate Premium for ${users[userIndex].name}?`)) {
+                users[userIndex].premium = true;
+                localStorage.setItem('physics_users', JSON.stringify(users));
+                alert(`${users[userIndex].name} is now Premium!`);
+                loadAllData();
+            }
+        }
+        
+        function resetUserQuestions(userId) {
+            const users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            const userIndex = users.findIndex(u => u.id === userId);
+            
+            if (userIndex === -1) return;
+            
+            if (confirm(`Reset questions for ${users[userIndex].name}?`)) {
+                users[userIndex].questions = 0;
+                users[userIndex].date = new Date().toDateString();
+                localStorage.setItem('physics_users', JSON.stringify(users));
+                alert('Questions reset!');
+                loadAllData();
+            }
+        }
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('pendingTab').classList.add('hidden');
+            document.getElementById('approvedTab').classList.add('hidden');
+            document.getElementById('usersTab').classList.add('hidden');
+            
+            if (tab === 'pending') document.getElementById('pendingTab').classList.remove('hidden');
+            else if (tab === 'approved') document.getElementById('approvedTab').classList.remove('hidden');
+            else if (tab === 'users') document.getElementById('usersTab').classList.remove('hidden');
+        }
+        
+        // Expose functions
+        window.login = login;
+        window.logout = logout;
+        window.switchTab = switchTab;
+        window.approvePayment = approvePayment;
+        window.rejectPayment = rejectPayment;
+        window.deletePayment = deletePayment;
+        window.manuallyActivatePremium = manuallyActivatePremium;
+        window.resetUserQuestions = resetUserQuestions;
+        window.loadAllData = loadAllData;
+    </script>
+</body>
+</html>

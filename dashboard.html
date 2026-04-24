@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; }
+        .navbar { background: #0f3460; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 1.5rem; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: white; text-decoration: none; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
+        .card { background: white; border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .stat-box { background: white; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #0f3460; }
+        .btn-premium { background: #ffd700; color: #0f3460; padding: 1rem 2rem; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .status-badge { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; }
+        .status-free { background: #e0e0e0; color: #333; }
+        .status-premium { background: #00a86b; color: white; }
+        .status-pending { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><h1>⚡ PhysicsMaster.ng</h1></div>
+        <div class="nav-links">
+            <a href="index.html">📚 Library</a>
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>Welcome, <span id="userName"></span>!</h2>
+            <p id="memberStatus"></p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="questionsUsed">0</div>
+                <div>Questions Today</div>
+                <small id="questionsRemaining"></small>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="chaptersAccess">2</div>
+                <div>Free Chapters</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="accountStatus">Free</div>
+                <div>Account Status</div>
+            </div>
+        </div>
+        
+        <div class="card" style="text-align:center;" id="premiumSection">
+            <h3 id="premiumTitle">👑 Upgrade to Premium</h3>
+            <p id="premiumDesc">Get unlimited AI questions + all 20 chapters</p>
+            <h2 style="margin:1rem 0;">₦1,500 <small>one-time</small></h2>
+            <p style="margin-bottom:1rem;"><strong>Opay:</strong> 8052059012 - Alade Timothy Olarewaju</p>
+            <button class="btn-premium" onclick="window.location.href='index.html'">Go to Library to Pay</button>
+        </div>
+        
+        <div class="card" id="paymentStatus" style="display:none;">
+            <h3>📋 Payment Status</h3>
+            <p>Your payment is pending verification. Premium access will be granted once confirmed.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!currentUser) window.location.href = 'login.html';
+        
+        let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+        let userData = users.find(u => u.id === currentUser.id);
+        
+        if (!userData) {
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+        
+        // Update session with latest data
+        currentUser.premium = userData.premium || false;
+        currentUser.questions = userData.questionsUsed || 0;
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        document.getElementById('userName').textContent = currentUser.name;
+        document.getElementById('questionsUsed').textContent = currentUser.questions;
+        document.getElementById('questionsRemaining').textContent = `${10 - currentUser.questions} remaining today`;
+        
+        if (currentUser.premium) {
+            document.getElementById('accountStatus').textContent = 'Premium';
+            document.getElementById('memberStatus').innerHTML = '<span class="status-badge status-premium">✅ Premium Member</span>';
+            document.getElementById('premiumTitle').textContent = '👑 Premium Active';
+            document.getElementById('premiumDesc').textContent = 'You have unlimited AI and full access!';
+            document.getElementById('chaptersAccess').textContent = '20';
+            document.querySelector('.btn-premium').style.display = 'none';
+        } else {
+            document.getElementById('memberStatus').innerHTML = '<span class="status-badge status-free">🆓 Free Account</span>';
+            
+            // Check if payment is pending
+            let paymentRequests = JSON.parse(localStorage.getItem('payment_requests')) || [];
+            let pendingPayment = paymentRequests.find(r => r.userId === currentUser.id && r.status === 'pending');
+            
+            if (pendingPayment) {
+                document.getElementById('paymentStatus').style.display = 'block';
+                document.getElementById('memberStatus').innerHTML += '<br><span class="status-badge status-pending">⏳ Payment Pending Verification</span>';
+            }
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+        
+        window.logout = logout;
+    </script>
+</body>
+</html>

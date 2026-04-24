@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f3460, #16213e); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: white; border-radius: 20px; padding: 2.5rem; width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        h1 { color: #0f3460; text-align: center; margin-bottom: 0.5rem; }
+        h1 span { color: #00d2ff; font-size: 0.9rem; display: block; }
+        h2 { text-align: center; margin-bottom: 1.5rem; color: #333; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        input:focus { outline: none; border-color: #0f3460; }
+        button { width: 100%; padding: 12px; background: #0f3460; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        button:hover { background: #1a4a7a; }
+        .links { text-align: center; margin-top: 1.5rem; }
+        .links a { color: #0f3460; text-decoration: none; font-weight: bold; }
+        .error { color: red; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>⚡ PhysicsMaster.ng</h1>
+        <span style="display:block; text-align:center; color:#00d2ff; font-size:0.9rem; margin-bottom:1rem;">Secure Login • No Demo Access</span>
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email" value="">
+        <input type="password" id="password" placeholder="Password" value="">
+        <button onclick="login()">Login</button>
+        <div id="error" class="error"></div>
+        <div class="links">
+            Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+    <script>
+        function login() {
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            
+            // Clear previous error
+            errorDiv.textContent = '';
+            
+            // Validation
+            if (!email || !password) {
+                errorDiv.textContent = 'Please enter both email and password.';
+                return;
+            }
+            
+            // Get users from localStorage
+            let users = JSON.parse(localStorage.getItem('physics_users')) || [];
+            
+            // Find user
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Check daily reset for questions
+                const today = new Date().toDateString();
+                if (user.questionsDate !== today) {
+                    user.questionsUsed = 0;
+                    user.questionsDate = today;
+                    localStorage.setItem('physics_users', JSON.stringify(users));
+                }
+                
+                // Store current user in session
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    premium: user.premium || false,
+                    questions: user.questionsUsed || 0
+                }));
+                
+                // Redirect to homepage
+                window.location.href = 'index.html';
+            } else {
+                errorDiv.textContent = 'Invalid email or password.';
+            }
+        }
+        
+        // Allow Enter key to submit
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+        
+        // Redirect if already logged in
+        if (sessionStorage.getItem('currentUser')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

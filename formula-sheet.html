@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Formula Sheet | PhysicsMaster.ng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f7fa; color: #1a1a2e; }
+        .navbar { background: linear-gradient(135deg, #0f3460, #16213e); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: white; text-decoration: none; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 2rem; }
+        .header { background: linear-gradient(135deg, #0f3460, #1a4a7a); color: white; padding: 3rem 2rem; text-align: center; border-radius: 16px; margin-bottom: 2rem; }
+        .section { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .section h2 { color: #0f3460; border-left: 4px solid #00d2ff; padding-left: 1rem; margin-bottom: 1rem; }
+        .formula-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; }
+        .formula-name { font-weight: 600; color: #16213e; }
+        .formula-expr { font-family: 'Courier New', monospace; background: #1a1a2e; color: #00d2ff; padding: 3px 10px; border-radius: 5px; font-size: 0.9rem; }
+        footer { text-align: center; padding: 2rem; background: #16213e; color: #aaa; margin-top: 3rem; }
+        @media (max-width: 768px) { .formula-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><h1>⚡ PhysicsMaster.ng</h1></div>
+    <div class="nav-links">
+        <a href="index.html">📚 Library</a>
+        <a href="formula-sheet.html">📐 Formulas</a>
+        <a href="jamb-questions.html">📝 JAMB</a>
+        <a href="tricky-questions.html">🧠 Tricky</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="header"><h1>📐 Complete Physics Formula Sheet</h1><p>SS1 • SS2 • SS3 | All formulas in one place</p></div>
+
+    <div id="formulasContainer"></div>
+</div>
+
+<footer><p>© 2024 PhysicsMaster.ng — Master the Formulas!</p></footer>
+
+<script>
+    const sections = [
+        {
+            title:"🚀 Mechanics — Motion",
+            formulas:[
+                ["Velocity","v = Δx/Δt"],["Acceleration","a = Δv/Δt"],
+                ["First SUVAT","v = u + at"],["Second SUVAT","s = ut + ½at²"],
+                ["Third SUVAT","v² = u² + 2as"],["Average velocity","s = (u+v)t/2"]
+            ]
+        },
+        {
+            title:"💪 Mechanics — Forces & Energy",
+            formulas:[
+                ["Newton's 2nd Law","F = ma"],["Weight","W = mg"],
+                ["Kinetic Energy","KE = ½mv²"],["Potential Energy","PE = mgh"],
+                ["Work Done","W = Fd cosθ"],["Power","P = W/t = Fv"],
+                ["Momentum","p = mv"],["Impulse","J = FΔt = Δp"],
+                ["Efficiency","η = (MA/VR)×100%"]
+            ]
+        },
+        {
+            title:"📐 Mechanics — Machines & Pressure",
+            formulas:[
+                ["Mechanical Advantage","MA = Load/Effort"],["Velocity Ratio","VR = Effort dist/Load dist"],
+                ["Pressure (solid)","P = F/A"],["Pressure (liquid)","P = ρgh"],
+                ["Density","ρ = m/V"],["Relative Density","RD = ρ/ρwater"],
+                ["Atmospheric","1 atm = 101325 Pa"]
+            ]
+        },
+        {
+            title:"🔥 Heat & Thermodynamics",
+            formulas:[
+                ["Heat Energy","Q = mcΔT"],["Latent Heat","Q = mL"],
+                ["Boyle's Law","P₁V₁ = P₂V₂"],["Charles's Law","V₁/T₁ = V₂/T₂"],
+                ["Pressure Law","P₁/T₁ = P₂/T₂"],["General Gas","P₁V₁/T₁ = P₂V₂/T₂"],
+                ["Kelvin conversion","K = °C + 273"]
+            ]
+        },
+        {
+            title:"🌊 Waves & Sound",
+            formulas:[
+                ["Wave Equation","v = fλ"],["Period & Frequency","T = 1/f"],
+                ["Echo","2d = vt"]
+            ]
+        },
+        {
+            title:"⚡ Electricity & Circuits",
+            formulas:[
+                ["Ohm's Law","V = IR"],["Resistance","R = ρL/A"],
+                ["Power","P = IV = I²R = V²/R"],["Energy","E = Pt = VIt"],
+                ["Series Resistance","R = R₁+R₂+R₃"],["Parallel Resistance","1/R = 1/R₁+1/R₂"],
+                ["Internal Resistance","E = I(R+r)"],["Current","I = Q/t"]
+            ]
+        },
+        {
+            title:"🧲 Electromagnetism",
+            formulas:[
+                ["Motor Force","F = BIL sinθ"],["Faraday's Law","ε = -N(ΔΦ/Δt)"],
+                ["Transformer","Vp/Vs = Np/Ns"]
+            ]
+        },
+        {
+            title:"💡 Optics",
+            formulas:[
+                ["Snell's Law","n₁sinθ₁ = n₂sinθ₂"],["Refractive Index","n = c/v"],
+                ["Critical Angle","sin θc = n₂/n₁"],["Lens Formula","1/f = 1/u + 1/v"],
+                ["Magnification","M = v/u = hi/ho"]
+            ]
+        },
+        {
+            title:"⚛️ Modern Physics",
+            formulas:[
+                ["Einstein's Equation","E = mc²"],["Photon Energy","E = hf = hc/λ"],
+                ["Half-Life","T½ = ln2/λ = 0.693/λ"],["Decay Law","N = N₀e^(-λt)"]
+            ]
+        }
+    ];
+
+    const container = document.getElementById('formulasContainer');
+    container.innerHTML = sections.map(s => `
+        <div class="section">
+            <h2>${s.title}</h2>
+            ${s.formulas.map(f => `
+                <div class="formula-row">
+                    <span class="formula-name">${f[0]}</span>
+                    <span class="formula-expr">${f[1]}</span>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+</script>
+</body>
+</html>
